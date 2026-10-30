@@ -56,7 +56,7 @@
   const blank = () => `<div class="pg pg--right pg--end"></div>`;
   const split = c => Math.max(1, Math.round(c.piatti.length / 2 - 1.2));
 
-  let leaves = [], s = 0, opened = false, timers = [];
+  let leaves = [], s = 0, target = 0, running = false, opened = false, gen = 0, timers = [];
   const book = $('[data-libro-book]', box), marks = $('[data-libro-marks]', box);
   const where = $('[data-libro-where]', box), prev = $('[data-libro-prev]', box), next = $('[data-libro-next]', box);
 
@@ -75,66 +75,98 @@
       html = [cover(), ...M.map((c, i) => page('single', esc(c.nome), head(c, i) + dishes(c.piatti) + art(i, 'pg__art pg__art--end'), i + 1))]
         .map(p => `<div class="leaf"><div class="leaf__face leaf__front">${p}</div></div>`).join('');
     }
-    book.innerHTML = `<div class="libro__base" aria-hidden="true"></div>${html}
+    book.innerHTML = `<div class="libro__base" aria-hidden="true"></div><div class="libro__base libro__base--l" aria-hidden="true"></div>
+      <div class="libro__pages">${html}</div>
       <button class="libro__edge libro__edge--prev" type="button" tabindex="-1" aria-hidden="true" data-edge="-1"></button>
       <button class="libro__edge libro__edge--next" type="button" tabindex="-1" aria-hidden="true" data-edge="1"></button>`;
     leaves = $$('.leaf', book);
-    paint(true);
+    gen++;
+    running = false;
+    s = target;
+    measure();
+    rest();
+  };
+  // spostamenti in pixel interi: niente bordi che tremolano per i mezzi pixel
+  const measure = () => {
+    book.style.setProperty('--shift', `${-Math.round(book.offsetWidth / 4)}px`);
+    book.style.setProperty('--out', `${-(Math.round(book.offsetWidth) + 40)}px`);
   };
 
-  const DUR = 900;
+  // A riposo: ogni foglio al suo posto. Restano visibili solo i fogli che si possono vedere nella prossima girata
+  // (in avanti o indietro); gli altri sono comunque coperti e non vengono disegnati.
   const zFor = i => (i < s ? i + 1 : leaves.length - i);
-  const paint = instant => {
+  const near = (i, st) => i >= st - 2 && i <= st + 1;
+  const rest = () => {
     leaves.forEach((l, i) => {
-      if (instant) l.style.transition = 'none';
       l.classList.toggle('is-flipped', i < s);
-      l.classList.remove('is-turning');
       l.style.zIndex = zFor(i);
-      l.style.removeProperty('--d');
+      l.style.visibility = near(i, s) ? '' : 'hidden';
     });
-    if (instant) { book.offsetWidth; leaves.forEach(l => { l.style.transition = ''; }); }
     ui();
   };
   // stato dei comandi: libro aperto, frecce, segnalibro attivo, scritta "sezione, n di 7"
   const ui = () => {
-    const k = s - 1, c = M[k];
-    book.classList.toggle('is-open', s > 0);
-    box.classList.toggle('is-open', s > 0);
-    prev.disabled = s <= 1;
-    next.disabled = s >= M.length;
+    const k = target - 1, c = M[k];
+    book.classList.toggle('is-open', target > 0);
+    box.classList.toggle('is-open', target > 0);
+    prev.disabled = target <= 1;
+    next.disabled = target >= M.length;
     $$('.mark', marks).forEach((m, i) => m.setAttribute('aria-current', i === k ? 'true' : 'false'));
     where.textContent = c ? `${c.nome}, ${k + 1} di ${M.length}` : 'Libro chiuso';
   };
 
+  // Una girata alla volta. Tutto ciò che cambia (pagine sotto visibili, foglio in primo piano, will-change)
+  // si prepara PRIMA del movimento e si rimette a posto DOPO: durante la girata non cambia niente tranne la rotazione.
+  const turn = (dir, dur) => new Promise(done => {
+    const g = gen, i = dir > 0 ? s : s - 1, l = leaves[i], to = s + dir;
+    leaves.forEach((x, k) => { if (near(k, s) || near(k, to)) x.style.visibility = ''; });
+    l.style.zIndex = 100;
+    l.style.transitionDuration = `${dur}ms`;
+    l.classList.add('is-moving');
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      if (g !== gen) { done(); return; }
+      let t = 0;
+      const finish = () => {
+        clearTimeout(t);
+        l.removeEventListener('transitionend', onEnd);
+        if (g !== gen) { done(); return; }
+        s = to;
+        l.classList.remove('is-moving');
+        l.style.transitionDuration = '';
+        rest();
+        done();
+      };
+      const onEnd = e => { if (e.target === l && e.propertyName === 'transform') finish(); };
+      l.addEventListener('transitionend', onEnd);
+      t = setTimeout(finish, dur + 150);
+      l.classList.toggle('is-flipped', dir > 0);
+    }));
+  });
+  const run = async () => {
+    if (running) return;
+    running = true;
+    const g = gen;
+    while (s !== target && g === gen) {
+      // salto con i segnalibri: le pagine scorrono una dopo l'altra, più svelte
+      const many = Math.abs(target - s) > 1;
+      await turn(Math.sign(target - s), wide.matches ? (many ? 340 : 900) : (many ? 260 : 560));
+    }
+    if (g === gen) running = false;
+  };
+
   const go = (t, user) => {
     t = Math.max(1, Math.min(M.length, t));
-    if (!leaves.length || t === s) return;
+    if (!leaves.length || t === target) return;
     opened = true;
-    timers.forEach(clearTimeout);
-    timers = [];
-    const from = s;
+    target = t;
     if (calm) {
       // Riduci movimento: niente pagine che girano, solo una dissolvenza breve
+      timers.forEach(clearTimeout);
       book.classList.add('is-fading');
-      timers.push(setTimeout(() => { s = t; paint(true); book.classList.remove('is-fading'); }, 180));
+      timers.push(setTimeout(() => { s = target; rest(); book.classList.remove('is-fading'); }, 180));
     } else {
-      const dir = t > from ? 1 : -1, turning = [];
-      for (let i = from; i !== t; i += dir) turning.push(dir > 0 ? i : i - 1);
-      const stag = turning.length > 1 ? Math.min(110, 520 / (turning.length - 1)) : 0;
-      s = t;
-      turning.forEach((i, k) => {
-        const l = leaves[i], d = Math.round(k * stag);
-        l.style.setProperty('--d', d + 'ms');
-        // chi parte per primo resta sopra finché è in piedi, poi chi arriva dopo si posa sopra
-        l.style.zIndex = 100 - k;
-        timers.push(setTimeout(() => { l.style.zIndex = 100 + k; }, d + DUR / 2));
-        l.classList.remove('is-turning');
-        l.offsetWidth;
-        l.classList.add('is-turning');
-        l.classList.toggle('is-flipped', dir > 0);
-      });
-      timers.push(setTimeout(() => paint(false), Math.round((turning.length - 1) * stag) + DUR + 40));
       ui();
+      run();
     }
     // telefono: se la pagina è più lunga dello schermo si torna all'inizio della pagina nuova
     if (user) {
@@ -142,7 +174,7 @@
       if (top < 0) scrollTo({ top: scrollY + top - 96, behavior: calm ? 'auto' : 'smooth' });
     }
   };
-  const step = (d, user) => go((s || 0) + d, user);
+  const step = (d, user) => go(target + d, user);
 
   /* ---------- Segnalibri ---------- */
   marks.innerHTML = M.map((c, i) => `<button class="mark" type="button" aria-current="false" aria-controls="libro-book" data-mark="${i}"><span>${esc(c.nome)}</span></button>`).join('');
@@ -162,7 +194,7 @@
   book.addEventListener('click', e => {
     if (swiped) return;
     const edge = e.target.closest('[data-edge]');
-    if (s === 0) go(1);
+    if (target === 0) go(1);
     else if (edge) step(+edge.dataset.edge, true);
   });
   book.addEventListener('keydown', e => {
@@ -201,4 +233,6 @@
 
   // cambio computer ↔ telefono: si ricostruiscono i fogli restando sulla stessa sezione
   wide.addEventListener('change', () => { timers.forEach(clearTimeout); build(); });
+  let vw = innerWidth;
+  addEventListener('resize', () => { if (innerWidth !== vw) { vw = innerWidth; measure(); } });
 })();

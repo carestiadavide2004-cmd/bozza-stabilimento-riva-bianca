@@ -553,27 +553,37 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--t
 .mark:focus-visible { outline: none; }
 .mark:focus-visible span { text-decoration: underline 2px; text-underline-offset: 4px; }
 
-.libro__book { position: relative; display: grid; width: min(100%, 560px); margin-inline: auto; perspective: 2400px; touch-action: pan-y; }
+.libro__book { position: relative; width: min(100%, 560px); margin-inline: auto; touch-action: pan-y; }
 .libro__book:focus-visible { outline: 2px solid var(--turq); outline-offset: 22px; }
 .libro__base { position: absolute; inset: -10px; border-radius: 6px; background: linear-gradient(var(--cloth), var(--cloth-2)); box-shadow: 0 50px 80px -40px rgba(0, 0, 0, .8); }
-@media (min-width: 900px) {
-  .libro__book { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); width: min(100%, 1120px); transition: transform 1s var(--ease); }
-  .libro__book:not(.is-open) { transform: translateX(-25%); }
-  .libro__base { inset: -12px; transition: left .9s var(--ease); }
-  .libro__book:not(.is-open) .libro__base { left: calc(50% - 6px); }
-}
+.libro__base--l { display: none; }
+.libro__pages { position: relative; z-index: 1; display: grid; }
+.leaf { grid-area: 1 / 1; position: relative; display: grid; transition: transform .9s cubic-bezier(.45, .05, .25, 1); }
+.leaf.is-moving { will-change: transform; }
+.leaf__face { grid-area: 1 / 1; position: relative; display: grid; }
 .libro__book.is-fading { opacity: 0; transition: opacity .18s; }
+@media (prefers-reduced-motion: reduce) { .leaf { transition: none; } }
 
-/* fogli: ruotano sulla costola (bordo sinistro); il retro è la pagina sinistra */
-.leaf { grid-area: 1 / 1; position: relative; display: grid; transform-origin: left center; transform-style: preserve-3d; transition: transform .9s cubic-bezier(.45, .05, .25, 1) var(--d, 0ms); }
-@media (min-width: 900px) { .leaf { grid-area: 1 / 2; } }
-.leaf.is-flipped { transform: rotateY(-180deg); }
-@media (max-width: 899px) { .leaf.is-flipped { pointer-events: none; } }
-.leaf__face { grid-area: 1 / 1; position: relative; display: grid; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
-.leaf__back { transform: rotateY(180deg); }
-.leaf__face::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; background: linear-gradient(90deg, rgba(50, 30, 5, .06), rgba(50, 30, 5, .26)); }
-.leaf.is-turning .leaf__face::after { animation: pageShade .9s ease var(--d, 0ms); }
-@keyframes pageShade { 50% { opacity: 1; } }
+/* computer: fogli 3D che girano sulla costola. Rotazione sempre attiva (strati pronti prima della girata),
+   fronte e retro con il lato nascosto invisibile, nessuna ombra animata */
+@media (min-width: 900px) {
+  .libro__book { width: min(100%, 1120px); transform: translate3d(0, 0, 0); transition: transform 1s var(--ease); }
+  .libro__book:not(.is-open) { transform: translate3d(var(--shift, -280px), 0, 0); }
+  .libro__base { inset: -12px -12px -12px 50%; border-radius: 0 6px 6px 0; }
+  .libro__base--l { display: block; inset: -12px 50% -12px -12px; border-radius: 6px 0 0 6px; transform-origin: 100% 50%; transition: transform .9s var(--ease); }
+  .libro__book:not(.is-open) .libro__base--l { transform: scaleX(0); }
+  .libro__pages { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); perspective: 2400px; transform-style: preserve-3d; }
+  .leaf { grid-area: 1 / 2; transform-origin: 0 50%; transform-style: preserve-3d; transform: rotateY(0deg); }
+  .leaf.is-flipped { transform: rotateY(-180deg); }
+  .leaf__face { -webkit-backface-visibility: hidden; backface-visibility: hidden; transform: rotateY(0deg); }
+  .leaf__back { transform: rotateY(180deg); }
+}
+/* telefono: una pagina alla volta che scorre via in piano (niente 3D), con un'ombra fissa sul bordo */
+@media (max-width: 899px) {
+  .libro__pages { overflow: hidden; border-radius: 0 4px 4px 0; }
+  .leaf { transition-duration: .56s; transition-timing-function: cubic-bezier(.22, .61, .36, 1); box-shadow: 16px 0 26px -14px rgba(30, 18, 0, .5); }
+  .leaf.is-flipped { transform: translate3d(var(--out, -420px), 0, 0); pointer-events: none; }
+}
 
 /* pagina di carta con la doppia riga del giornale di bordo */
 .pg { position: relative; display: flex; flex-direction: column; padding: clamp(30px, 3.4vw, 52px) clamp(24px, 3.6vw, 56px) clamp(26px, 3vw, 40px); color: var(--ink); border-radius: 0 4px 4px 0;
@@ -613,7 +623,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--t
 .cover__hint { font-family: var(--serif); font-style: italic; color: var(--on-dark-2); }
 
 /* bordo della pagina cliccabile, con l'angolo che si solleva */
-.libro__edge { position: absolute; top: 0; bottom: 0; z-index: 210; width: clamp(36px, 7%, 64px); }
+.libro__edge { position: absolute; top: 0; bottom: 0; z-index: 2; width: clamp(36px, 7%, 64px); }
 .libro__edge--prev { left: 0; }
 .libro__edge--next { right: 0; }
 .libro__book:not(.is-open) .libro__edge { display: none; }
