@@ -402,7 +402,7 @@
   const allBtn = $('[data-gallery-all]');
   if (allBtn) allBtn.addEventListener('click', () => {
     const g = $('#galleria');
-    if (innerWidth >= 900 && !g.classList.contains('is-all')) {
+    if (innerWidth >= 900 && !g.classList.contains('is-all') && !g.classList.contains('is-h')) {
       g.classList.add('is-all');
       allBtn.textContent = 'Apri la galleria a schermo intero';
       if (window.ScrollTrigger) ScrollTrigger.refresh();
@@ -511,37 +511,6 @@
     f.addEventListener('change', e => { if (fieldOf(e.target).classList.contains('is-invalid')) validate(fieldOf(e.target)); });
     f.addEventListener('input', e => { if (fieldOf(e.target).classList.contains('is-invalid')) validate(fieldOf(e.target)); });
   });
-
-  /* --- Prenota l'ombrellone --- */
-  const fo = $('[data-form="ombrellone"]');
-  if (fo) {
-    const s = season();
-    const min = s.start > today ? s.start : today;
-    const dal = fo.dal, al = fo.al;
-    [dal, al].forEach(i => { i.min = min; i.max = s.end; });
-    const range = () => {
-      const out = `La spiaggia è aperta dal ${dayMonth(s.start)} al ${dayMonth(s.end)} ${s.y}.`;
-      dal.setCustomValidity(dal.value && (dal.value < min || dal.value > s.end) ? (dal.value < today ? 'Scegli una data da oggi in poi.' : out) : '');
-      al.setCustomValidity(al.value && (al.value > s.end || al.value < min) ? out : (al.value && dal.value && al.value < dal.value ? 'La data di fine viene dopo quella di inizio.' : ''));
-    };
-    dal.addEventListener('change', () => { if (dal.value) al.min = dal.value; range(); });
-    al.addEventListener('change', range);
-    const periodo = () => al.value && al.value !== dal.value ? `dal ${dayLong(dal.value)} al ${dayLong(al.value)}` : dayLong(dal.value);
-    fo.addEventListener('submit', e => {
-      e.preventDefault();
-      range();
-      if (!validate(fo)) { setMsg(fo, 'Controlla i campi evidenziati.', true); return; }
-      send(fo, `Prenotazione ombrellone – ${C.nome}`, {
-        Periodo: periodo(), Fila: fo.fila.value, Lettini: fo.lettini.value, Nome: fo.nome.value, Telefono: fo.telefono.value
-      });
-    });
-    $('[data-wa-send]', fo).addEventListener('click', () => {
-      range();
-      if (!validate(fo, { skipConsent: true })) { setMsg(fo, 'Controlla i campi evidenziati.', true); return; }
-      setMsg(fo, '');
-      openWa([`Ciao ${C.nome}, vorrei prenotare un ombrellone.`, `Periodo: ${periodo()}`, `Fila: ${fo.fila.value}`, `Lettini: ${fo.lettini.value}`, `Nome: ${fo.nome.value}`, `Telefono: ${fo.telefono.value}`]);
-    });
-  }
 
   /* --- Prenota un tavolo (a passaggi) --- */
   const ft = $('[data-form="tavolo"]');
@@ -662,9 +631,12 @@
     });
   }
 
+  // Strumenti dei moduli condivisi con la mappa della spiaggia (js/mappa.js)
+  window.rbForm = { validate, setErr, setMsg, send, openWa, season, now, dayLong, dayMonth, addDays, esc, calm };
+
   /* ---------- Movimento ridotto: solo dissolvenze brevi ---------- */
   if (calm && 'IntersectionObserver' in window) {
-    const els = $$('.section-head, .split, .chef, .pillar, .terrace, .pricing, .booking, .week, .quote-block, .stats');
+    const els = $$('.section-head, .split, .chef, .pillar, .terrace, .shrink, .pricing, .booking, .week, .quote-block, .stats, .film, .mini');
     const io = new IntersectionObserver(entries => entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
     }), { rootMargin: '0px 0px -8% 0px' });

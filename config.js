@@ -85,6 +85,38 @@ window.RB = {
       righe: [["Prima fila", "1.900 €"], ["Seconda fila", "1.600 €"], ["Dalla terza fila", "1.300 €"]] }
   ],
 
+  // Mappa della spiaggia per "Prenota l'ombrellone".
+  // Le file vanno dal mare (fila 1) verso il bar. "passerella" = dopo quale ombrellone
+  // passa il corridoio centrale. Prezzi al giorno, in euro.
+  mappa: {
+    ombrelloniPerFila: 12,
+    passerella: 6,
+    file: [
+      { fila: 1, prezzo: 45 },
+      { fila: 2, prezzo: 38 },
+      { fila: 3, prezzo: 30 },
+      { fila: 4, prezzo: 30 },
+      { fila: 5, prezzo: 30 }
+    ],
+    // Postazioni speciali dietro l'ultima fila. "colonna" va da 1 a 12 come gli ombrelloni
+    // (si possono usare i decimali per stare a metà tra due colonne).
+    speciali: [
+      { tipo: "palma", numero: 1, colonna: 1.4 },
+      { tipo: "palma", numero: 2, colonna: 3 },
+      { tipo: "gazebo", numero: 1, colonna: 5 },
+      { tipo: "gazebo", numero: 2, colonna: 8 },
+      { tipo: "palma", numero: 3, colonna: 10 },
+      { tipo: "palma", numero: 4, colonna: 11.6 }
+    ],
+    tipi: {
+      ombrellone: { nome: "Ombrellone", comprende: ["1 ombrellone", "2 lettini", "1 tavolino"] },
+      palma: { nome: "Palma", prezzo: 70, comprende: ["l'ombra di una palma", "2 lettini", "1 sdraio", "1 tavolino", "zona più riservata"] },
+      gazebo: { nome: "Gazebo", prezzo: 140, comprende: ["gazebo in legno con tende", "4 lettini", "1 divanetto", "servizio al posto"] }
+    },
+    // Solo per la demo: quota di posti occupati (i posti cambiano con la data, ma sono sempre uguali per la stessa data)
+    occupatiDemo: 0.34
+  },
+
   menu: [
     { id: "crudi", nome: "Crudi e ostriche", piatti: [
       ["Crudo dell'Adriatico", "Scampi, mazzancolle, tartare di tonno e carpaccio del giorno", "38"],

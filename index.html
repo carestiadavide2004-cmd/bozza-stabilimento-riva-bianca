@@ -121,19 +121,23 @@
         <video class="vid" data-video="hero" muted playsinline loop autoplay preload="auto" aria-hidden="true"></video>
       </div>
       <div class="hero__shade" aria-hidden="true"></div>
+      <!-- il fondo sfuma nel colore della sezione successiva -->
+      <div class="hero__fade" aria-hidden="true"></div>
       <div class="wrap hero__content">
         <div class="hero__top">
           <h1 class="hero__title">
             <span class="hero__kicker">Stabilimento balneare e ristorante di mare a Pescara</span>
             <span class="display lines" data-hero-lines><span class="ln"><span>Il giorno in riva,</span></span><span class="ln"><span>la sera a tavola.</span></span></span>
           </h1>
-          <p class="status" data-status><span class="status__dot" aria-hidden="true"></span><span data-status-text>Ristorante aperto tutto l'anno</span></p>
         </div>
-        <!-- i pulsanti stanno sulla sabbia: la riva con la schiuma resta libera -->
-        <div class="hero__actions">
-          <a class="btn btn--dark" href="#prenota">Prenota un tavolo</a>
-          <a class="btn btn--line" href="#ombrellone">Prenota l'ombrellone</a>
-          <a class="btn btn--line btn--icon" data-wa href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg><span>WhatsApp</span></a>
+        <!-- titolo sul cielo, pulsanti sulla sfumatura: il sole e le onde restano liberi -->
+        <div class="hero__bottom">
+          <p class="status" data-status><span class="status__dot" aria-hidden="true"></span><span data-status-text>Ristorante aperto tutto l'anno</span></p>
+          <div class="hero__actions">
+            <a class="btn btn--dark" href="#prenota">Prenota un tavolo</a>
+            <a class="btn btn--line" href="#ombrellone" data-open-map>Prenota l'ombrellone</a>
+            <a class="btn btn--line btn--icon" data-wa href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg><span>WhatsApp</span></a>
+          </div>
         </div>
       </div>
       <button class="vid-toggle" type="button" data-vid-toggle="hero" aria-label="Metti in pausa il video">
@@ -157,50 +161,60 @@
       </div>
     </section>
 
-    <!-- 3. TOUR ALLO SCORRIMENTO -->
+    <!-- 3. TOUR A CAPITOLI: la sezione resta ferma, i video si danno il cambio in dissolvenza -->
     <section class="tour" id="tour" aria-labelledby="t-tour" data-tour>
-      <h2 class="sr-only" id="t-tour">Il tour: dal mare alla terrazza</h2>
+      <h2 class="sr-only" id="t-tour">Una giornata a Riva Bianca in quattro capitoli</h2>
       <div class="tour__sticky">
-        <canvas class="tour__canvas" aria-hidden="true" data-tour-canvas></canvas>
-        <div class="tour__shade" aria-hidden="true"></div>
-        <ol class="tour__stages">
-          <li class="stage" data-stage>
-            <picture class="stage__pic">
-              <source media="(max-aspect-ratio: 1/1)" srcset="assets/tour/m/008.webp">
-              <img src="assets/tour/d/008.webp" width="1280" height="720" alt="Il mare turchese visto dall'alto" loading="lazy" decoding="async">
-            </picture>
-            <div class="stage__text"><span class="stage__n">01</span><h3>Il mare</h3><p>L'Adriatico davanti al lettino. Acqua bassa e chiara per i primi metri, ideale anche per i bambini.</p></div>
+        <ol class="tour__chapters">
+          <li class="chap is-active" data-chapter="mare">
+            <div class="chap__media">
+              <picture>
+                <source media="(max-aspect-ratio: 1/1)" srcset="assets/video/tour-mare-mobile.webp">
+                <img src="assets/video/tour-mare-desktop.webp" width="1920" height="1080" alt="Il mare turchese e la schiuma sulla riva, visti dall'alto" loading="lazy" decoding="async">
+              </picture>
+              <video muted playsinline loop preload="none" aria-hidden="true"></video>
+            </div>
+            <div class="wrap chap__text"><span class="chap__n">01</span><h3 class="chap__title" data-chars>Il mare</h3><p>L'Adriatico davanti al lettino. Acqua bassa e chiara per i primi metri, ideale anche per i bambini.</p></div>
           </li>
-          <li class="stage" data-stage>
-            <picture class="stage__pic">
-              <source media="(max-aspect-ratio: 1/1)" srcset="assets/tour/m/036.webp">
-              <img src="assets/tour/d/036.webp" width="1280" height="720" alt="La spiaggia di sabbia bianca dall'alto" loading="lazy" decoding="async">
-            </picture>
-            <div class="stage__text"><span class="stage__n">02</span><h3>La spiaggia</h3><p>Trecento metri di sabbia fine, file ordinate e quattro metri tra un ombrellone e l'altro.</p></div>
+          <li class="chap" data-chapter="spiaggia">
+            <div class="chap__media">
+              <picture>
+                <source media="(max-aspect-ratio: 1/1)" srcset="assets/video/tour-spiaggia-mobile.webp">
+                <img src="assets/video/tour-spiaggia-desktop.webp" width="1920" height="1080" alt="Una spiaggia di sabbia bianca sul mare turchese, vista dal drone" loading="lazy" decoding="async">
+              </picture>
+              <video muted playsinline loop preload="none" aria-hidden="true"></video>
+            </div>
+            <div class="wrap chap__text"><span class="chap__n">02</span><h3 class="chap__title" data-chars>La spiaggia</h3><p>Trecento metri di sabbia fine, file ordinate e quattro metri tra un ombrellone e l'altro.</p></div>
           </li>
-          <li class="stage stage--alt" data-stage>
-            <picture class="stage__pic">
-              <source media="(max-aspect-ratio: 1/1)" srcset="assets/tour/m/062.webp">
-              <img src="assets/tour/d/062.webp" width="1280" height="720" alt="Le terrazze sul mare all'imbrunire" loading="lazy" decoding="async">
-            </picture>
-            <div class="stage__text"><span class="stage__n">03</span><h3>La terrazza</h3><p>Centoventi coperti affacciati sulla riva: crudi a pranzo, cena a lume di candela.</p></div>
+          <li class="chap chap--alt" data-chapter="terrazza">
+            <div class="chap__media">
+              <picture>
+                <source media="(max-aspect-ratio: 1/1)" srcset="assets/video/tour-terrazza-mobile.webp">
+                <img src="assets/video/tour-terrazza-desktop.webp" width="1920" height="1080" alt="Le terrazze degli stabilimenti sul mare all'imbrunire" loading="lazy" decoding="async">
+              </picture>
+              <video muted playsinline loop preload="none" aria-hidden="true"></video>
+            </div>
+            <div class="wrap chap__text"><span class="chap__n">03</span><h3 class="chap__title" data-chars>La terrazza</h3><p>Centoventi coperti affacciati sulla riva: crudi a pranzo, cena a lume di candela.</p></div>
           </li>
-          <li class="stage" data-stage>
-            <picture class="stage__pic">
-              <source media="(max-aspect-ratio: 1/1)" srcset="assets/tour/m/092.webp">
-              <img src="assets/tour/d/092.webp" width="1280" height="720" alt="Il tramonto dorato sulla costa" loading="lazy" decoding="async">
-            </picture>
-            <div class="stage__text"><span class="stage__n">04</span><h3>Il tramonto</h3><p>Il cielo si accende alle spalle della città e il mare diventa rosa. È l'ora dell'aperitivo.</p></div>
+          <li class="chap" data-chapter="tramonto">
+            <div class="chap__media">
+              <picture>
+                <source media="(max-aspect-ratio: 1/1)" srcset="assets/video/tour-tramonto-mobile.webp">
+                <img src="assets/video/tour-tramonto-desktop.webp" width="1920" height="1080" alt="Il riflesso dorato del sole sulla battigia al tramonto" loading="lazy" decoding="async">
+              </picture>
+              <video muted playsinline loop preload="none" aria-hidden="true"></video>
+            </div>
+            <div class="wrap chap__text"><span class="chap__n">04</span><h3 class="chap__title" data-chars>Il tramonto</h3><p>Il cielo si accende alle spalle della città e il mare diventa oro. È l'ora dell'aperitivo.</p></div>
           </li>
         </ol>
-        <div class="tour__bar" aria-hidden="true"><span data-tour-bar></span></div>
+        <ol class="tour__dots" aria-hidden="true"><li class="is-active"></li><li></li><li></li><li></li></ol>
       </div>
     </section>
 
     <!-- 4. LA SPIAGGIA -->
     <section class="beach" id="spiaggia" aria-labelledby="t-spiaggia">
       <div class="wrap section-head">
-        <h2 class="h2 lines" id="t-spiaggia" data-lines><span class="ln"><span>La spiaggia</span></span></h2>
+        <h2 class="h2" id="t-spiaggia" data-chars>La spiaggia</h2>
         <div class="section-head__body">
           <p>Ombrelloni in tela écru, lettini in teak e file larghe, perché in riva si viene per stare tranquilli. Il bar apre con il primo caffè e chiude con l'ultimo spritz.</p>
           <p class="meta" data-season></p>
@@ -215,7 +229,7 @@
       </div>
 
       <div class="wrap split">
-        <figure class="pic pic--tall" data-curtain>
+        <figure class="pic pic--tall" data-reveal="left">
           <div class="pic__inner" data-parallax>
             <img src="assets/img/spiaggia-ombrelloni-800.webp" srcset="assets/img/spiaggia-ombrelloni-800.webp 800w, assets/img/spiaggia-ombrelloni-1600.webp 1600w" sizes="(min-width: 900px) 40vw, 92vw" width="1600" height="1067" alt="File di ombrelloni a righe bianche e blu sulla spiaggia" loading="lazy" decoding="async">
           </div>
@@ -238,41 +252,20 @@
       </div>
 
       <div class="wrap booking" id="ombrellone">
-        <figure class="pic booking__pic" data-curtain>
+        <figure class="pic booking__pic" data-reveal="bottom">
           <div class="pic__inner" data-parallax>
             <img src="assets/img/spiaggia-lettini-640.webp" srcset="assets/img/spiaggia-lettini-640.webp 640w, assets/img/spiaggia-lettini-1200.webp 1200w" sizes="(min-width: 900px) 45vw, 92vw" width="1200" height="1800" alt="Lettini bianchi sulla sabbia davanti al mare turchese, vista dall'alto" loading="lazy" decoding="async">
           </div>
         </figure>
-        <form class="form form--dark" data-form="ombrellone" novalidate>
+        <div class="booking__card">
           <h3 class="h3">Prenota l'ombrellone</h3>
-          <p class="form__intro">Scegli il periodo e la fila: ti richiamiamo per confermare.</p>
-          <div class="grid2">
-            <label class="field"><span>Dal</span><input type="date" name="dal" required data-season-date></label>
-            <label class="field"><span>Al <small>(facoltativo)</small></span><input type="date" name="al" data-season-date></label>
-            <label class="field"><span>Fila preferita</span>
-              <select name="fila" required>
-                <option value="Prima fila">Prima fila</option>
-                <option value="Seconda fila">Seconda fila</option>
-                <option value="Dalla terza fila">Dalla terza fila</option>
-                <option value="Indifferente">Indifferente</option>
-              </select>
-            </label>
-            <label class="field"><span>Lettini</span>
-              <select name="lettini" required>
-                <option>1</option><option selected>2</option><option>3</option><option>4</option>
-              </select>
-            </label>
-            <label class="field"><span>Nome</span><input name="nome" required autocomplete="name"></label>
-            <label class="field"><span>Telefono</span><input name="telefono" type="tel" required autocomplete="tel" inputmode="tel"></label>
-          </div>
-          <label class="check"><input type="checkbox" name="privacy" required data-consent><span>Ho letto l'<a href="privacy.html">informativa privacy</a></span></label>
+          <p class="form__intro">Scegli il giorno e il posto esatto sulla mappa della spiaggia: in prima fila, all'ombra di una palma o sotto un gazebo.</p>
+          <button class="booking__preview" type="button" data-open-map aria-label="Apri la mappa della spiaggia"><span data-map-preview></span></button>
           <div class="form__actions">
-            <button class="btn btn--light" type="submit">Invia la richiesta</button>
-            <button class="btn btn--line-light btn--icon" type="button" data-wa-send><svg aria-hidden="true"><use href="#i-wa"/></svg><span>Invia su WhatsApp</span></button>
+            <a class="btn btn--light" href="#ombrellone" data-open-map>Scegli il posto sulla mappa</a>
+            <a class="btn btn--line-light btn--icon" data-wa href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg><span>Chiedi su WhatsApp</span></a>
           </div>
-          <p class="form__msg" role="status" aria-live="polite" data-msg></p>
-          <p class="form__demo" data-demo hidden>Modulo dimostrativo: senza chiave Web3Forms la richiesta non viene inviata. Usa "Invia su WhatsApp" per provarlo.</p>
-        </form>
+        </div>
       </div>
     </section>
 
@@ -294,7 +287,7 @@
       </div>
 
       <div class="wrap chef">
-        <figure class="pic chef__pic" data-curtain>
+        <figure class="pic chef__pic" data-reveal="right">
           <div class="pic__inner" data-parallax>
             <img src="assets/img/chef-640.webp" srcset="assets/img/chef-640.webp 640w, assets/img/chef-1200.webp 1200w" sizes="(min-width: 900px) 38vw, 92vw" width="1200" height="1800" alt="Le mani dello chef impiattano un piatto con la pinzetta" loading="lazy" decoding="async">
           </div>
@@ -309,8 +302,9 @@
       </div>
 
       <div class="wrap pillars">
+        <p class="pillars__bg" aria-hidden="true" data-depth>Adriatico</p>
         <article class="pillar">
-          <figure class="pic pic--portrait" data-curtain>
+          <figure class="pic pic--portrait" data-reveal="center">
             <div class="pic__inner" data-parallax>
               <img src="assets/img/crudi-640.webp" srcset="assets/img/crudi-640.webp 640w, assets/img/crudi-1200.webp 1200w" sizes="(min-width: 900px) 34vw, 92vw" width="1200" height="1800" alt="Ostriche aperte su piatti bianchi con spicchi di limone" loading="lazy" decoding="async">
             </div>
@@ -319,7 +313,7 @@
           <p>Scampi, mazzancolle, ricciola e pesce azzurro dalle barche di zona. Il crudo si sceglie al banco, il pescato del giorno si cuoce intero.</p>
         </article>
         <article class="pillar pillar--low">
-          <figure class="pic pic--portrait" data-curtain>
+          <figure class="pic pic--portrait" data-reveal="top">
             <div class="pic__inner" data-parallax>
               <img src="assets/img/pizza-640.webp" srcset="assets/img/pizza-640.webp 640w, assets/img/pizza-1200.webp 1200w" sizes="(min-width: 900px) 34vw, 92vw" width="1200" height="1800" alt="Il pizzaiolo stende due pizze sul bancone infarinato" loading="lazy" decoding="async">
             </div>
@@ -350,16 +344,22 @@
       </div>
 
       <div class="wrap terrace">
+        <h3 class="h3">La terrazza sul mare</h3>
         <div class="terrace__text">
-          <h3 class="h3">La terrazza sul mare</h3>
           <p>Tavoli in legno chiaro, tovaglie di lino e il rumore della risacca. A pranzo si sta all'ombra delle vele, la sera si accendono le candele.</p>
           <a class="link" href="#prenota">Prenota in terrazza <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
-        <figure class="pic terrace__pic" data-curtain>
-          <div class="pic__inner" data-parallax>
-            <img src="assets/img/terrazza-640.webp" srcset="assets/img/terrazza-640.webp 640w, assets/img/terrazza-1200.webp 1200w" sizes="(min-width: 900px) 46vw, 92vw" width="1200" height="1600" alt="Tavolo apparecchiato sulla terrazza davanti al mare al tramonto" loading="lazy" decoding="async">
-          </div>
-        </figure>
+      </div>
+      <!-- foto a tutto schermo che si restringe in una cornice mentre si scorre -->
+      <div class="shrink" data-shrink>
+        <div class="shrink__sticky">
+          <figure class="shrink__frame" data-shrink-frame>
+            <picture>
+              <source media="(max-aspect-ratio: 1/1)" srcset="assets/img/terrazza-640.webp 640w, assets/img/terrazza-1200.webp 1200w" sizes="100vw">
+              <img src="assets/img/gal-12-1600.webp" srcset="assets/img/gal-12-800.webp 800w, assets/img/gal-12-1600.webp 1600w" sizes="100vw" width="1600" height="1066" alt="Tavolo apparecchiato sul pontile davanti al mare all'imbrunire" loading="lazy" decoding="async">
+            </picture>
+          </figure>
+        </div>
       </div>
     </section>
 
@@ -367,7 +367,7 @@
     <section class="menu" id="menu" aria-labelledby="t-menu">
       <div class="wrap">
         <div class="section-head section-head--dark">
-          <h2 class="h2 lines" id="t-menu" data-lines><span class="ln"><span>Il menù</span></span></h2>
+          <h2 class="h2" id="t-menu" data-chars>Il menù</h2>
           <div class="section-head__body"><p>Cambia con il mare e con le stagioni. Qui trovi una giornata d'estate tipo, dai crudi al bicchiere della staffa.</p></div>
         </div>
         <div class="tabs" role="tablist" aria-label="Categorie del menù" data-tabs></div>
@@ -462,7 +462,7 @@
         <div class="section-head__body"><p>Matrimoni, lauree, cene aziendali e serate in musica. Spiaggia, terrazza e cucina sono vostre, dall'aperitivo all'ultimo ballo.</p></div>
       </div>
 
-      <figure class="wrap film" data-curtain>
+      <figure class="wrap film" data-reveal="diagonal">
         <div class="film__frame">
           <video class="vid" data-video="eventi" muted playsinline loop preload="none" aria-hidden="true"></video>
         </div>
@@ -486,9 +486,9 @@
       </div>
 
       <div class="wrap mini">
-        <div class="pic"><img src="assets/img/ev-g1-640.webp" srcset="assets/img/ev-g1-640.webp 640w, assets/img/ev-g1-1200.webp 1200w" sizes="(min-width: 900px) 30vw, 70vw" width="1200" height="1800" alt="Ospiti a una festa all'aperto illuminata da lucine" loading="lazy" decoding="async"></div>
-        <div class="pic"><img src="assets/img/ev-g3-800.webp" srcset="assets/img/ev-g3-800.webp 800w, assets/img/ev-g3-1600.webp 1600w" sizes="(min-width: 900px) 36vw, 80vw" width="1600" height="1068" alt="Sposi e invitati al ricevimento serale sotto le luci" loading="lazy" decoding="async"></div>
-        <div class="pic"><img src="assets/img/ev-g2-640.webp" srcset="assets/img/ev-g2-640.webp 640w, assets/img/ev-g2-1200.webp 1200w" sizes="(min-width: 900px) 30vw, 70vw" width="1200" height="1800" alt="Tavoli apparecchiati sotto una ghirlanda di luci" loading="lazy" decoding="async"></div>
+        <div class="pic" data-reveal="left"><img src="assets/img/ev-g1-640.webp" srcset="assets/img/ev-g1-640.webp 640w, assets/img/ev-g1-1200.webp 1200w" sizes="(min-width: 900px) 30vw, 70vw" width="1200" height="1800" alt="Ospiti a una festa all'aperto illuminata da lucine" loading="lazy" decoding="async"></div>
+        <div class="pic" data-reveal="right"><img src="assets/img/ev-g3-800.webp" srcset="assets/img/ev-g3-800.webp 800w, assets/img/ev-g3-1600.webp 1600w" sizes="(min-width: 900px) 36vw, 80vw" width="1600" height="1068" alt="Sposi e invitati al ricevimento serale sotto le luci" loading="lazy" decoding="async"></div>
+        <div class="pic" data-reveal="left"><img src="assets/img/ev-g2-640.webp" srcset="assets/img/ev-g2-640.webp 640w, assets/img/ev-g2-1200.webp 1200w" sizes="(min-width: 900px) 30vw, 70vw" width="1200" height="1800" alt="Tavoli apparecchiati sotto una ghirlanda di luci" loading="lazy" decoding="async"></div>
       </div>
 
       <div class="wrap quote-block" id="preventivo">
@@ -523,28 +523,32 @@
 
     <!-- 9. GALLERIA -->
     <section class="gallery" id="galleria" aria-labelledby="t-gal">
-      <div class="wrap section-head">
-        <h2 class="h2 lines" id="t-gal" data-lines><span class="ln"><span>Galleria</span></span></h2>
-        <div class="section-head__body"><p>Una giornata a Riva Bianca, dal primo bagno all'ultimo calice.</p></div>
-      </div>
-      <div class="rail rail--bleed gallery__rail" data-rail>
-        <ul class="rail__track gallery__grid" data-gallery>
-          <li><a href="assets/img/gal-01-1200.webp" data-lb><img src="assets/img/gal-01-640.webp" width="1200" height="1800" alt="Ombrelloni chiusi in riva al mare al tramonto" loading="lazy" decoding="async"></a></li>
-          <li><a href="assets/img/gal-02-1600.webp" data-lb><img src="assets/img/gal-02-800.webp" width="1600" height="1064" alt="Piatto di gamberi crudi e ostriche" loading="lazy" decoding="async"></a></li>
-          <li><a href="assets/img/gal-03-1200.webp" data-lb><img src="assets/img/gal-03-640.webp" width="1200" height="1800" alt="Patio con ombrellone e piante affacciato sul mare" loading="lazy" decoding="async"></a></li>
-          <li><a href="assets/img/spiaggia-fila-1600.webp" data-lb><img src="assets/img/spiaggia-fila-800.webp" width="1600" height="898" alt="Una fila di lettini sulla sabbia bianca vista dall'alto" loading="lazy" decoding="async"></a></li>
-          <li><a href="assets/img/gal-05-1200.webp" data-lb><img src="assets/img/gal-05-640.webp" width="1200" height="1800" alt="Spritz su un tavolino in terrazza" loading="lazy" decoding="async"></a></li>
-          <li><a href="assets/img/gal-06-1200.webp" data-lb><img src="assets/img/gal-06-640.webp" width="1200" height="1600" alt="Dessert al cioccolato impiattato su piatto bianco" loading="lazy" decoding="async"></a></li>
-          <li><a href="assets/img/gal-04-1600.webp" data-lb><img src="assets/img/gal-04-800.webp" width="1600" height="900" alt="Un ombrellone turchese sulla sabbia vicino alla riva, dall'alto" loading="lazy" decoding="async"></a></li>
-          <li><a href="assets/img/gal-07-1200.webp" data-lb><img src="assets/img/gal-07-640.webp" width="1200" height="1800" alt="Sedie blu e lucine sul patio vista mare" loading="lazy" decoding="async"></a></li>
-          <li class="is-extra"><a href="assets/img/gal-08-1600.webp" data-lb><img src="assets/img/gal-08-800.webp" width="1600" height="1085" alt="Vassoio di ostriche con salsa al centro" loading="lazy" decoding="async"></a></li>
-          <li class="is-extra"><a href="assets/img/gal-09-1600.webp" data-lb><img src="assets/img/gal-09-800.webp" width="1600" height="1066" alt="Arco di fiori per un matrimonio sul pontile" loading="lazy" decoding="async"></a></li>
-          <li class="is-extra"><a href="assets/img/gal-10-1600.webp" data-lb><img src="assets/img/gal-10-800.webp" width="1600" height="900" alt="Calice di bollicine davanti al porto" loading="lazy" decoding="async"></a></li>
-          <li class="is-extra"><a href="assets/img/gal-12-1600.webp" data-lb><img src="assets/img/gal-12-800.webp" width="1600" height="1066" alt="Tavolo apparecchiato sul pontile all'imbrunire" loading="lazy" decoding="async"></a></li>
-        </ul>
-      </div>
-      <div class="wrap gallery__more">
-        <button class="btn btn--line" type="button" data-gallery-all>Vedi tutte le foto <span>(12)</span></button>
+      <!-- su computer la galleria scorre di lato mentre si scende -->
+      <div class="hs" data-hs>
+        <div class="hs__sticky">
+          <div class="wrap section-head">
+            <h2 class="h2" id="t-gal" data-chars>Galleria</h2>
+            <div class="section-head__body"><p>Una giornata a Riva Bianca, dal primo bagno all'ultimo calice.</p></div>
+          </div>
+          <div class="rail rail--bleed gallery__rail" data-rail>
+            <ul class="rail__track gallery__grid" data-gallery>
+              <li><a href="assets/img/gal-01-1200.webp" data-lb><img src="assets/img/gal-01-640.webp" width="1200" height="1800" alt="Ombrelloni chiusi in riva al mare al tramonto" loading="lazy" decoding="async"></a></li>
+              <li><a href="assets/img/gal-02-1600.webp" data-lb><img src="assets/img/gal-02-800.webp" width="1600" height="1064" alt="Piatto di gamberi crudi e ostriche" loading="lazy" decoding="async"></a></li>
+              <li><a href="assets/img/gal-03-1200.webp" data-lb><img src="assets/img/gal-03-640.webp" width="1200" height="1800" alt="Patio con ombrellone e piante affacciato sul mare" loading="lazy" decoding="async"></a></li>
+              <li><a href="assets/img/spiaggia-fila-1600.webp" data-lb><img src="assets/img/spiaggia-fila-800.webp" width="1600" height="898" alt="Una fila di lettini sulla sabbia bianca vista dall'alto" loading="lazy" decoding="async"></a></li>
+              <li><a href="assets/img/gal-05-1200.webp" data-lb><img src="assets/img/gal-05-640.webp" width="1200" height="1800" alt="Spritz su un tavolino in terrazza" loading="lazy" decoding="async"></a></li>
+              <li><a href="assets/img/gal-06-1200.webp" data-lb><img src="assets/img/gal-06-640.webp" width="1200" height="1600" alt="Dessert al cioccolato impiattato su piatto bianco" loading="lazy" decoding="async"></a></li>
+              <li><a href="assets/img/gal-04-1600.webp" data-lb><img src="assets/img/gal-04-800.webp" width="1600" height="900" alt="Un ombrellone turchese sulla sabbia vicino alla riva, dall'alto" loading="lazy" decoding="async"></a></li>
+              <li><a href="assets/img/gal-07-1200.webp" data-lb><img src="assets/img/gal-07-640.webp" width="1200" height="1800" alt="Sedie blu e lucine sul patio vista mare" loading="lazy" decoding="async"></a></li>
+              <li class="is-extra"><a href="assets/img/gal-08-1600.webp" data-lb><img src="assets/img/gal-08-800.webp" width="1600" height="1085" alt="Vassoio di ostriche con salsa al centro" loading="lazy" decoding="async"></a></li>
+              <li class="is-extra"><a href="assets/img/gal-09-1600.webp" data-lb><img src="assets/img/gal-09-800.webp" width="1600" height="1066" alt="Arco di fiori per un matrimonio sul pontile" loading="lazy" decoding="async"></a></li>
+              <li class="is-extra"><a href="assets/img/gal-10-1600.webp" data-lb><img src="assets/img/gal-10-800.webp" width="1600" height="900" alt="Calice di bollicine davanti al porto" loading="lazy" decoding="async"></a></li>
+            </ul>
+          </div>
+          <div class="wrap gallery__more">
+            <button class="btn btn--line" type="button" data-gallery-all>Vedi tutte le foto <span>(11)</span></button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -579,10 +583,10 @@
         </div>
         <div class="finale__shade" aria-hidden="true"></div>
         <div class="wrap finale__content">
-          <h2 class="display lines" id="t-contatti" data-lines><span class="ln"><span>Ci vediamo</span></span><span class="ln"><span>in riva.</span></span></h2>
+          <h2 class="display" id="t-contatti" data-chars>Ci vediamo<br>in riva.</h2>
           <div class="hero__actions">
             <a class="btn btn--light" href="#prenota">Prenota un tavolo</a>
-            <a class="btn btn--line-light" href="#ombrellone">Prenota l'ombrellone</a>
+            <a class="btn btn--line-light" href="#ombrellone" data-open-map>Prenota l'ombrellone</a>
           </div>
         </div>
       </div>
@@ -636,6 +640,67 @@
     <a href="#prenota" class="dock__main"><span>Prenota</span></a>
   </nav>
 
+  <!-- "Prenota" della barra: si sceglie tra tavolo e ombrellone (la barra resta com'è) -->
+  <div class="chooser" data-chooser hidden>
+    <p class="chooser__title" id="chooser-title">Cosa vuoi prenotare?</p>
+    <a class="btn btn--dark" href="#prenota" data-chooser-close>Un tavolo al ristorante</a>
+    <button class="btn btn--line" type="button" data-open-map>Un ombrellone in spiaggia</button>
+  </div>
+
+  <!-- Prenota l'ombrellone: mappa della spiaggia -->
+  <dialog class="bm" data-map-dialog aria-labelledby="bm-title">
+    <header class="bm__bar">
+      <div>
+        <p class="bm__kicker">Prenota l'ombrellone</p>
+        <h2 class="bm__title" id="bm-title">Scegli il tuo posto in spiaggia</h2>
+      </div>
+      <button class="bm__close" type="button" data-map-close aria-label="Chiudi la mappa" autofocus><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+    </header>
+    <div class="bm__main" data-bm-main>
+      <div class="bm__dates">
+        <label class="field"><span>Dal</span><input type="date" name="dal" data-bm-from></label>
+        <label class="field"><span>Al <small>(facoltativo)</small></span><input type="date" name="al" data-bm-to></label>
+      </div>
+      <div class="bm__map" data-bm-viewport>
+        <div class="bm__canvas" data-bm-canvas></div>
+        <p class="bm__veil" data-bm-veil>Scegli la data: la mappa ti mostra i posti liberi di quel giorno.</p>
+        <div class="bm__zoom">
+          <button type="button" data-bm-zoom="out" aria-label="Riduci la mappa"><svg aria-hidden="true" viewBox="0 0 20 20"><path d="M4 10h12"/></svg></button>
+          <button type="button" data-bm-zoom="in" aria-label="Ingrandisci la mappa"><svg aria-hidden="true" viewBox="0 0 20 20"><path d="M4 10h12M10 4v12"/></svg></button>
+        </div>
+      </div>
+      <ul class="bm__legend">
+        <li><i class="is-free" aria-hidden="true"></i>Libero</li>
+        <li><i class="is-busy" aria-hidden="true"></i>Occupato</li>
+        <li><i class="is-sel" aria-hidden="true"></i>Selezionato</li>
+      </ul>
+      <p class="note">Disponibilità di esempio: nella demo i posti occupati sono simulati.</p>
+    </div>
+    <aside class="bm__side" aria-label="Posti scelti">
+      <div class="bm__card" data-bm-card hidden></div>
+      <div class="bm__sum">
+        <p class="bm__sum-text" data-bm-sum aria-live="polite">Nessun posto scelto</p>
+        <button class="btn btn--dark" type="button" data-bm-go disabled>Prenota</button>
+      </div>
+    </aside>
+    <form class="form bm__form" data-form="ombrellone" novalidate hidden>
+      <h3 class="h3">Ultimo passaggio</h3>
+      <div class="bm__recap" data-bm-recap></div>
+      <div class="grid2">
+        <label class="field"><span>Nome</span><input name="nome" required autocomplete="name"></label>
+        <label class="field"><span>Telefono</span><input name="telefono" type="tel" required autocomplete="tel" inputmode="tel"></label>
+      </div>
+      <label class="check"><input type="checkbox" name="privacy" required data-consent><span>Ho letto l'<a href="privacy.html">informativa privacy</a></span></label>
+      <div class="form__actions">
+        <button class="btn btn--dark" type="submit">Invia la richiesta</button>
+        <button class="btn btn--line btn--icon" type="button" data-wa-send><svg aria-hidden="true"><use href="#i-wa"/></svg><span>Invia su WhatsApp</span></button>
+        <button class="btn btn--line" type="button" data-bm-back>Modifica i posti</button>
+      </div>
+      <p class="form__msg" role="status" aria-live="polite" data-msg></p>
+      <p class="form__demo" data-demo hidden>Modulo dimostrativo: senza chiave Web3Forms la richiesta non viene inviata. Usa "Invia su WhatsApp" per provarlo.</p>
+    </form>
+  </dialog>
+
   <dialog class="lb" data-lb-dialog aria-label="Galleria fotografica">
     <p class="lb__cap" data-lb-cap></p>
     <button class="lb__btn lb__close" type="button" data-lb-close aria-label="Chiudi"><svg aria-hidden="true"><use href="#i-close"/></svg></button>
@@ -647,6 +712,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="js/main.js" defer></script>
+  <script src="js/mappa.js" defer></script>
   <script src="js/scene.js" defer></script>
 </body>
 </html>
