@@ -245,6 +245,8 @@
       done();
     };
     intro.addEventListener('animationend', e => { if (e.target === intro) end(); });
+    // se lo script arriva quando l'animazione CSS è già finita, chiude subito
+    if (intro.getAnimations) intro.getAnimations().forEach(a => a.finished.then(end, () => {}));
     const skip = () => { if (!ended) intro.classList.add('is-skip'); };
     ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(ev => addEventListener(ev, skip, { once: true, passive: true }));
     setTimeout(end, 1450);

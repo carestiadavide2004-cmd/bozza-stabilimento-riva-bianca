@@ -222,7 +222,12 @@
       setTimeout(() => { if (!okCount) fallback(); }, 12000);
     };
     if ('IntersectionObserver' in window) {
-      const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { start(); io.disconnect(); } }, { rootMargin: '150% 0px' });
+      // prima il video dell'hero, poi i fotogrammi quando il tour è a una schermata di distanza
+      const io = new IntersectionObserver(([e]) => {
+        if (!e.isIntersecting) return;
+        io.disconnect();
+        if (document.readyState === 'complete') start(); else addEventListener('load', start, { once: true });
+      }, { rootMargin: '100% 0px' });
       io.observe(sec);
     } else start();
 
