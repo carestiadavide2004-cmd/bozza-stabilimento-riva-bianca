@@ -1,5 +1,91 @@
-/* Riva Bianca — "Prenota l'ombrellone" con la mappa della spiaggia vista dall'alto.
-   File, prezzi e postazioni speciali arrivano da config.js (RB.mappa). */
+/* Riva Bianca — mappe viste dall'alto: la spiaggia per prenotare l'ombrellone e la piantina dei tavoli.
+   File, prezzi, postazioni e tavoli arrivano da config.js (RB.mappa e RB.tavoli). */
+
+/* ---------- Strumenti comuni alle due mappe ---------- */
+window.rbMapKit = (() => {
+  // Disponibilità simulata: casuale ma sempre uguale per la stessa chiave (data, posto…)
+  const hash = str => {
+    let h = 2166136261;
+    for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+    // rimescolamento finale: date e posti vicini danno risultati davvero diversi
+    h ^= h >>> 16; h = Math.imul(h, 0x85ebca6b); h ^= h >>> 13; h = Math.imul(h, 0xc2b2ae35); h ^= h >>> 16;
+    return (h >>> 0) / 4294967296;
+  };
+
+  // Onde: tratti periodici (120 unità) che scorrono piano
+  const wave = (y, a, w) => { let d = `M-120 ${y}q30 ${-a} 60 0`; for (let x = -60; x < w + 120; x += 60) d += 't60 0'; return d; };
+
+  // Ingrandimento con + e −, spostamento col dito solo dentro il riquadro (mai la pagina di lato).
+  // locate(el) restituisce [x, y] in frazioni del disegno per centrare ciò che riceve il focus.
+  function panZoom(vp, cv, zoomIn, zoomOut, locate) {
+    const LEVELS = [1, 1.6, 2.3, 3];
+    const calm = !!(window.rbForm && window.rbForm.calm);
+    let z = 0, tx = 0, ty = 0, drag = null, moved = false;
+    const apply = anim => {
+      const w = vp.clientWidth, h = vp.clientHeight, s = LEVELS[z];
+      tx = Math.min(0, Math.max(w - w * s, tx));
+      ty = Math.min(0, Math.max(h - h * s, ty));
+      cv.style.transition = anim && !calm ? 'transform .45s cubic-bezier(.16, 1, .3, 1)' : 'none';
+      cv.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${s})`;
+      vp.classList.toggle('is-zoomed', z > 0);
+      zoomOut.disabled = z === 0;
+      zoomIn.disabled = z === LEVELS.length - 1;
+    };
+    const zoomTo = (nz, cx = vp.clientWidth / 2, cy = vp.clientHeight / 2) => {
+      const k = LEVELS[nz] / LEVELS[z];
+      tx = cx - (cx - tx) * k;
+      ty = cy - (cy - ty) * k;
+      z = nz;
+      apply(true);
+    };
+    const center = (fx, fy, nz = z) => {
+      const w = vp.clientWidth, h = vp.clientHeight;
+      z = nz;
+      tx = w / 2 - fx * w * LEVELS[z];
+      ty = h / 2 - fy * h * LEVELS[z];
+      apply(true);
+    };
+    zoomIn.addEventListener('click', () => zoomTo(Math.min(z + 1, LEVELS.length - 1)));
+    zoomOut.addEventListener('click', () => zoomTo(Math.max(z - 1, 0)));
+    vp.addEventListener('pointerdown', e => {
+      if (z === 0 || e.button > 0) return;
+      drag = { id: e.pointerId, x: e.clientX, y: e.clientY, tx, ty };
+    });
+    vp.addEventListener('pointermove', e => {
+      if (!drag || e.pointerId !== drag.id) return;
+      const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+      if (!moved && Math.hypot(dx, dy) < 6) return;
+      if (!moved) { moved = true; vp.setPointerCapture(e.pointerId); vp.classList.add('is-dragging'); }
+      tx = drag.tx + dx;
+      ty = drag.ty + dy;
+      apply(false);
+    });
+    const endDrag = () => {
+      if (!drag) return;
+      drag = null;
+      vp.classList.remove('is-dragging');
+      setTimeout(() => { moved = false; }, 0);
+    };
+    vp.addEventListener('pointerup', endDrag);
+    vp.addEventListener('pointercancel', endDrag);
+    // la tastiera può spostare il riquadro: si torna al disegno e si centra ciò che ha il focus
+    vp.addEventListener('scroll', () => { vp.scrollLeft = 0; vp.scrollTop = 0; });
+    cv.addEventListener('focusin', e => {
+      const at = locate(e.target);
+      if (!at || z === 0 || drag) return;
+      const w = vp.clientWidth, h = vp.clientHeight;
+      const px = at[0] * w * LEVELS[z] + tx, py = at[1] * h * LEVELS[z] + ty;
+      if (px < 40 || px > w - 40 || py < 40 || py > h - 40) center(at[0], at[1]);
+    });
+    let vw = innerWidth;
+    addEventListener('resize', () => { if (innerWidth !== vw) { vw = innerWidth; z = 0; tx = ty = 0; apply(false); } });
+    return { apply, center, moved: () => moved };
+  }
+
+  return { hash, wave, panZoom };
+})();
+
+/* ---------- Prenota l'ombrellone ---------- */
 (() => {
   const C = window.RB, M = C && C.mappa, F = window.rbForm;
   const dlg = document.querySelector('[data-map-dialog]');
@@ -70,7 +156,7 @@
   const sym = { ombrellone: 'bm-umb', palma: 'bm-palm', gazebo: 'bm-gaz' };
 
   // Onde: tratti periodici (120 unità) che scorrono piano; la riva respira
-  const wave = (y, a) => { let d = `M-120 ${y}q30 ${-a} 60 0`; for (let x = -60; x < W + 120; x += 60) d += 't60 0'; return d; };
+  const wave = (y, a) => window.rbMapKit.wave(y, a, W);
   const scene = () => `
     <defs>
       <linearGradient id="bm-sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B6673"/><stop offset=".55" stop-color="#3AA39F"/><stop offset="1" stop-color="#8ED2C9"/></linearGradient>
@@ -93,13 +179,7 @@
     <text x="${W / 2}" y="${BAR + 44}" class="bm__bar-label">Bar, docce e ristorante</text>`;
 
   /* ---------- Disponibilità simulata: casuale ma sempre uguale per la stessa data ---------- */
-  const hash = str => {
-    let h = 2166136261;
-    for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
-    // rimescolamento finale: date e posti vicini danno risultati davvero diversi
-    h ^= h >>> 16; h = Math.imul(h, 0x85ebca6b); h ^= h >>> 13; h = Math.imul(h, 0xc2b2ae35); h ^= h >>> 16;
-    return (h >>> 0) / 4294967296;
-  };
+  const hash = window.rbMapKit.hash;
   const busyFor = (key, n, weekend) => s => {
     let r = M.occupatiDemo + (weekend ? .1 : 0) + Math.min(.18, (n - 1) * .015);
     r += s.tipo === 'ombrellone' ? (s.fila === 1 ? .12 : s.fila === 2 ? .05 : 0) : .08;
@@ -222,68 +302,18 @@
   }
 
   /* --- Tocco sui posti --- */
-  let moved = false;
+  /* --- Ingrandimento con + e −, spostamento col dito dentro il riquadro --- */
+  const pz = window.rbMapKit.panZoom(vp, cv, zoomIn, zoomOut, el => {
+    const b = el.closest('[data-spot]');
+    if (!b) return null;
+    const s = byId.get(b.dataset.spot);
+    return [s.x / W, s.y / H];
+  });
   cv.addEventListener('click', e => {
     const b = e.target.closest('[data-spot]');
-    if (!b || moved) return;
+    if (!b || pz.moved()) return;
     showCard(byId.get(b.dataset.spot));
   });
-
-  /* --- Ingrandimento con + e −, spostamento col dito dentro il riquadro --- */
-  const LEVELS = [1, 1.6, 2.3, 3];
-  let z = 0, tx = 0, ty = 0;
-  const apply = anim => {
-    const w = vp.clientWidth, h = vp.clientHeight, s = LEVELS[z];
-    tx = Math.min(0, Math.max(w - w * s, tx));
-    ty = Math.min(0, Math.max(h - h * s, ty));
-    cv.style.transition = anim && !F.calm ? 'transform .45s cubic-bezier(.16, 1, .3, 1)' : 'none';
-    cv.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${s})`;
-    vp.classList.toggle('is-zoomed', z > 0);
-    zoomOut.disabled = z === 0;
-    zoomIn.disabled = z === LEVELS.length - 1;
-  };
-  const zoomTo = (nz, cx = vp.clientWidth / 2, cy = vp.clientHeight / 2) => {
-    const k = LEVELS[nz] / LEVELS[z];
-    tx = cx - (cx - tx) * k;
-    ty = cy - (cy - ty) * k;
-    z = nz;
-    apply(true);
-  };
-  zoomIn.addEventListener('click', () => zoomTo(Math.min(z + 1, LEVELS.length - 1)));
-  zoomOut.addEventListener('click', () => zoomTo(Math.max(z - 1, 0)));
-  let drag = null;
-  vp.addEventListener('pointerdown', e => {
-    if (z === 0 || e.button > 0) return;
-    drag = { id: e.pointerId, x: e.clientX, y: e.clientY, tx, ty };
-  });
-  vp.addEventListener('pointermove', e => {
-    if (!drag || e.pointerId !== drag.id) return;
-    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
-    if (!moved && Math.hypot(dx, dy) < 6) return;
-    if (!moved) { moved = true; vp.setPointerCapture(e.pointerId); vp.classList.add('is-dragging'); }
-    tx = drag.tx + dx;
-    ty = drag.ty + dy;
-    apply(false);
-  });
-  const endDrag = () => {
-    if (!drag) return;
-    drag = null;
-    vp.classList.remove('is-dragging');
-    setTimeout(() => { moved = false; }, 0);
-  };
-  vp.addEventListener('pointerup', endDrag);
-  vp.addEventListener('pointercancel', endDrag);
-  // la tastiera può spostare il riquadro: si torna al disegno e si centra il posto
-  vp.addEventListener('scroll', () => { vp.scrollLeft = 0; vp.scrollTop = 0; });
-  cv.addEventListener('focusin', e => {
-    const b = e.target.closest('[data-spot]');
-    if (!b || z === 0 || drag) return;
-    const s = byId.get(b.dataset.spot), w = vp.clientWidth, h = vp.clientHeight;
-    const px = s.x / W * w * LEVELS[z] + tx, py = s.y / H * h * LEVELS[z] + ty;
-    if (px < 40 || px > w - 40 || py < 40 || py > h - 40) { tx = w / 2 - s.x / W * w * LEVELS[z]; ty = h / 2 - s.y / H * h * LEVELS[z]; apply(true); }
-  });
-  let vw = innerWidth;
-  addEventListener('resize', () => { if (innerWidth !== vw) { vw = innerWidth; z = 0; tx = ty = 0; apply(false); } });
 
   /* --- Passaggio ai dati e invio --- */
   const showForm = on => {
@@ -331,7 +361,7 @@
     showForm(false);
     if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
     root.classList.add('is-locked');
-    requestAnimationFrame(() => apply(false));
+    requestAnimationFrame(() => pz.apply(false));
   };
   $$('[data-open-map]').forEach(el => el.addEventListener('click', open));
   $('[data-map-close]', dlg).addEventListener('click', () => dlg.close());

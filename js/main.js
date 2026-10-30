@@ -49,7 +49,8 @@
   $$('[data-cfg="indirizzo"]').forEach(e => { e.textContent = addr; });
   $$('[data-cfg-tel]').forEach(a => { a.href = `tel:${C.telefono.link}`; a.textContent = `Tel. ${C.telefono.testo}`; });
   $$('[data-cfg-tel-short]').forEach(a => { a.href = `tel:${C.telefono.link}`; });
-  $$('[data-wa]').forEach(a => { a.href = waLink(`Ciao ${C.nome}, vorrei qualche informazione.`); });
+  $$('[data-cfg-tel-num]').forEach(a => { a.href = `tel:${C.telefono.link}`; a.textContent = C.telefono.testo; });
+  $$('[data-wa]').forEach(a => { a.href = waLink(a.dataset.waMsg === 'tavolo' ? `Ciao ${C.nome}, vorrei prenotare un tavolo.` : `Ciao ${C.nome}, vorrei qualche informazione.`); });
   $$('[data-cfg-mail]').forEach(a => { a.href = `mailto:${C.email}`; a.textContent = C.email; });
   $$('[data-maps]').forEach(a => { a.href = mapsLink; });
   $$('[data-cfg="chefNome"]').forEach(e => { e.textContent = C.chef.nome; });
@@ -123,47 +124,7 @@
       p.righe.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl></article>`).join('');
   });
 
-  // Menù a schede
-  const tabsBox = $('[data-tabs]'), menuBox = $('[data-menu]');
-  if (tabsBox && menuBox) {
-    const SHOW = 4;
-    tabsBox.innerHTML = C.menu.map((c, i) =>
-      `<button class="tab" role="tab" id="tab-${c.id}" aria-controls="panel-${c.id}" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}">${esc(c.nome)}</button>`).join('');
-    menuBox.innerHTML = C.menu.map((c, i) => `
-      <div class="menu__panel" role="tabpanel" id="panel-${c.id}" aria-labelledby="tab-${c.id}" tabindex="0" ${i ? 'hidden' : ''}>
-        <ul class="dishlist">${c.piatti.map(([n, d, p], k) =>
-          `<li${k >= SHOW ? ' class="is-extra"' : ''}><b>${esc(n)}</b><em>${esc(p)}${/\d$/.test(p) ? ' €' : ''}</em><span>${esc(d)}</span></li>`).join('')}</ul>
-        ${c.piatti.length > SHOW ? `<button class="btn btn--line-light btn--sm menu__more" type="button" aria-expanded="false" data-more>Vedi tutto <span>(${c.piatti.length})</span></button>` : ''}
-      </div>`).join('');
-    const tabs = $$('[role="tab"]', tabsBox);
-    const select = (t, focus) => {
-      tabs.forEach(x => {
-        const on = x === t;
-        x.setAttribute('aria-selected', on);
-        x.tabIndex = on ? 0 : -1;
-        $('#' + x.getAttribute('aria-controls')).hidden = !on;
-      });
-      if (focus) t.focus({ preventScroll: true });
-      // porta in vista la scheda scorrendo solo la fila delle schede, mai la pagina
-      const l = t.getBoundingClientRect().left - tabsBox.getBoundingClientRect().left + tabsBox.scrollLeft, r = l + t.offsetWidth;
-      if (l < tabsBox.scrollLeft || r > tabsBox.scrollLeft + tabsBox.clientWidth) tabsBox.scrollTo({ left: l - 16, behavior: calm ? 'auto' : 'smooth' });
-    };
-    tabs.forEach((t, i) => {
-      t.addEventListener('click', () => select(t));
-      t.addEventListener('keydown', e => {
-        const k = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
-        if (k === undefined) return;
-        e.preventDefault();
-        select(tabs[(k + tabs.length) % tabs.length], true);
-      });
-    });
-    $$('[data-more]', menuBox).forEach(b => b.addEventListener('click', () => {
-      const panel = b.closest('.menu__panel');
-      const all = panel.classList.toggle('is-all');
-      b.setAttribute('aria-expanded', all);
-      b.firstChild.textContent = all ? 'Mostra meno ' : 'Vedi tutto ';
-    }));
-  }
+  // Menù: il "Libro del marinaio" è in js/libro.js
 
   // Eventi
   $$('[data-event-cards]').forEach(box => {
@@ -258,7 +219,7 @@
   let lastY = scrollY, ticking = false;
   const onScroll = () => {
     const y = scrollY;
-    const limit = (hero ? hero.offsetHeight : 400) - header.offsetHeight;
+    const limit = (hero ? hero.offsetHeight * .6 : 400) - header.offsetHeight;  // fondo pieno prima della sfumatura chiara
     header.classList.toggle('is-solid', y > limit);
     if (!root.classList.contains('nav-open')) {
       if (y > lastY + 6 && y > limit + 200) header.classList.add('is-hidden');
@@ -293,24 +254,37 @@
     v.classList.remove('is-ready');
     v.src = s;
   };
-  const playVid = v => {
-    if (calm || v.dataset.user === 'off') return;
-    loadVid(v);
-    const p = v.play();
-    if (p && p.catch) p.catch(() => {});
-  };
   vids.forEach(v => {
     v.muted = true;
     v.defaultMuted = true;
     if (calm) v.removeAttribute('autoplay');
     v.addEventListener('playing', () => v.classList.add('is-ready'));
   });
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver(entries => entries.forEach(e => {
-      if (e.isIntersecting) playVid(e.target); else e.target.pause();
-    }), { rootMargin: '25% 0px' });
-    vids.forEach(v => io.observe(v));
-  } else vids.forEach(playVid);
+
+  // Regista dei video: in ogni momento ne suona UNO solo, quello che occupa più schermo; tutti gli altri in pausa.
+  // Il tour si iscrive da scene.js con rbVideos.add({ box, video }) e decide lui quale capitolo mostrare.
+  const slots = vids.map(v => ({ box: v.parentElement, video: () => v }));
+  let tick = 0;
+  const direct = () => {
+    tick = 0;
+    const vh = innerHeight;
+    let best = null, bestPx = vh * .2;
+    slots.forEach(s => {
+      const r = s.box.getBoundingClientRect();
+      const px = Math.min(r.bottom, vh) - Math.max(r.top, 0);
+      if (px > bestPx) { bestPx = px; best = s; }
+    });
+    const v = best && best.video();
+    $$('video').forEach(x => { if (x !== v && !x.paused) x.pause(); });
+    if (!v || v.dataset.user === 'off' || (calm && v.dataset.user !== 'on')) return;
+    if (v.dataset.video) loadVid(v);
+    if (v.paused) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+  };
+  const schedule = () => { if (!tick) tick = requestAnimationFrame(direct); };
+  addEventListener('scroll', schedule, { passive: true });
+  addEventListener('resize', schedule);
+  window.rbVideos = { add: s => { slots.push(s); schedule(); }, update: schedule };
+  schedule();
 
   const toggle = $('[data-vid-toggle]');
   if (toggle) {
@@ -322,12 +296,8 @@
     };
     if (calm) v.dataset.user = 'off';
     toggle.addEventListener('click', () => {
-      if (v.paused || !v.dataset.cur) {
-        v.dataset.user = 'on';
-        loadVid(v);
-        const p = v.play();
-        if (p && p.catch) p.catch(() => {});
-      } else { v.dataset.user = 'off'; v.pause(); }
+      if (v.paused || !v.dataset.cur) { v.dataset.user = 'on'; schedule(); }
+      else { v.dataset.user = 'off'; v.pause(); }
     });
     v.addEventListener('play', sync);
     v.addEventListener('pause', sync);
@@ -341,7 +311,7 @@
     vw = innerWidth;
     if (portrait() !== wasPortrait) {
       wasPortrait = portrait();
-      vids.forEach(v => { if (v.dataset.cur && !v.paused) { loadVid(v); playVid(v); } else if (v.dataset.cur) delete v.dataset.cur; });
+      schedule();   // il video scelto si ricarica nel formato giusto, gli altri quando tornano in vista
     }
   });
 
@@ -549,8 +519,9 @@
     $$('input[name="fascia"]', ft).forEach(r => r.addEventListener('change', renderSlots));
 
     const pp = ft.persone;
-    $('[data-step-minus]', ft).addEventListener('click', () => { pp.value = Math.max(1, (+pp.value || 1) - 1); });
-    $('[data-step-plus]', ft).addEventListener('click', () => { pp.value = Math.min(12, (+pp.value || 1) + 1); });
+    const setPP = n => { pp.value = Math.max(1, Math.min(12, n)); pp.dispatchEvent(new Event('input', { bubbles: true })); };
+    $('[data-step-minus]', ft).addEventListener('click', () => setPP((+pp.value || 1) - 1));
+    $('[data-step-plus]', ft).addEventListener('click', () => setPP((+pp.value || 1) + 1));
 
     const checkStep = i => {
       if (i === 0) {
@@ -564,7 +535,7 @@
 
     const summary = () => {
       const s = $('[data-summary]', ft);
-      s.textContent = `${dayLong(date.value)}, ore ${ft.ora.value} (${ft.fascia.value.toLowerCase()}), ${pp.value} ${+pp.value === 1 ? 'persona' : 'persone'}, ${ft.preferenza.value.toLowerCase()}.`;
+      s.textContent = `${dayLong(date.value)}, ore ${ft.ora.value} (${ft.fascia.value.toLowerCase()}), ${pp.value} ${+pp.value === 1 ? 'persona' : 'persone'}, ${ft.tavolo.value ? ft.tavolo.value.replace(/^Tavolo/, 'tavolo') : 'tavolo da assegnare'}.`;
     };
 
     const go = i => {
@@ -580,7 +551,10 @@
       setMsg(ft, '');
       steps[i].tabIndex = -1;
       steps[i].focus({ preventScroll: true });
+      ft.dispatchEvent(new CustomEvent('rb:step', { detail: i }));
     };
+    // per la piantina dei tavoli (js/tavoli.js) e il riquadro "Cena romantica"
+    ft.rbSteps = { go, checkStep, get step() { return step; } };
     next.addEventListener('click', () => { if (checkStep(step)) go(step + 1); });
     prev.addEventListener('click', () => go(step - 1));
 
@@ -593,7 +567,7 @@
     };
     const data = () => ({
       Data: dayLong(date.value), Orario: `${ft.ora.value} (${ft.fascia.value})`, Persone: pp.value,
-      Preferenza: ft.preferenza.value, Nome: ft.nome.value, Telefono: ft.telefono.value, Note: ft.note.value
+      Tavolo: ft.tavolo.value || 'Da assegnare', Nome: ft.nome.value, Telefono: ft.telefono.value, Note: ft.note.value
     });
     ft.addEventListener('submit', e => {
       e.preventDefault();
@@ -603,7 +577,7 @@
     wa.addEventListener('click', () => {
       if (!allOk(true)) { setMsg(ft, 'Controlla i campi evidenziati.', true); return; }
       const d = data();
-      openWa([`Ciao ${C.nome}, vorrei prenotare un tavolo.`, `Data: ${d.Data}`, `Orario: ${d.Orario}`, `Persone: ${d.Persone}`, `Preferenza: ${d.Preferenza}`, `Nome: ${d.Nome}`, `Telefono: ${d.Telefono}`, d.Note && `Note: ${d.Note}`]);
+      openWa([`Ciao ${C.nome}, vorrei prenotare un tavolo.`, `Data: ${d.Data}`, `Orario: ${d.Orario}`, `Persone: ${d.Persone}`, `Tavolo: ${d.Tavolo}`, `Nome: ${d.Nome}`, `Telefono: ${d.Telefono}`, d.Note && `Note: ${d.Note}`]);
     });
   }
 

@@ -70,7 +70,7 @@
     const N = chaps.length;
     const saveData = !!(navigator.connection && navigator.connection.saveData);
     const portrait = () => innerWidth / innerHeight < 1;
-    let active = 0, near = false, inView = false, mode = portrait(), z = 2;
+    let active = 0, near = false, mode = portrait(), z = 2;
 
     const load = i => {
       const v = vids[i];
@@ -84,16 +84,16 @@
     };
     vids.forEach(v => v && v.addEventListener('playing', () => v.classList.add('is-ready')));
 
-    // si carica e si riproduce solo il capitolo visibile, più il successivo in anticipo; gli altri in pausa
+    // si scarica solo il capitolo visibile più il successivo; a chi suona ci pensa il regista dei video (main.js)
     const shown = c => c.style.visibility !== 'hidden' && +gsap.getProperty(c, 'opacity') > 0;
     const sync = () => {
       if (near) { load(active); if (active + 1 < N) load(active + 1); }
-      vids.forEach((v, i) => {
-        if (!v) return;
-        if (inView && i === active && v.dataset.src) { const p = v.play(); if (p) p.catch(() => {}); }
-        else if (!v.paused && (!inView || (i !== active && !shown(chaps[i])))) v.pause();
-      });
+      if (window.rbVideos) window.rbVideos.update();
     };
+    if (window.rbVideos) window.rbVideos.add({
+      box: $('.tour__sticky', sec) || sec,
+      video: () => (near && vids[active] && vids[active].dataset.src) ? vids[active] : null
+    });
 
     gsap.set(chaps, { autoAlpha: 0, zIndex: 1 });
     gsap.set(chaps[0], { autoAlpha: 1, zIndex: z });
@@ -130,10 +130,6 @@
     ScrollTrigger.create({
       trigger: sec, start: 'top top', end: 'bottom bottom',
       onUpdate: self => go(Math.min(N - 1, Math.floor(self.progress * N * .9999)))
-    });
-    ScrollTrigger.create({
-      trigger: sec, start: 'top bottom', end: 'bottom top',
-      onToggle: self => { inView = self.isActive; sync(); }
     });
     // il primo video comincia a scaricarsi quando il tour è a una schermata di distanza
     ScrollTrigger.create({
@@ -201,7 +197,8 @@
           ink.append(s, i < words.length - 1 ? ' ' : '');
         });
       }
-      gsap.fromTo($$('.w', ink), { opacity: .16 }, {
+      // mai sotto 0,7: il testo resta leggibile (contrasto oltre 4.5:1) anche prima di arrivarci
+      gsap.fromTo($$('.w', ink), { opacity: .7 }, {
         opacity: 1, ease: 'none', stagger: .05,
         scrollTrigger: { trigger: ink, start: 'top 80%', end: 'bottom 55%', scrub: true }
       });
@@ -306,7 +303,7 @@
     });
 
     /* Linee sottili che si disegnano sotto elenchi, servizi, serate e domande */
-    ['.services', '[data-week]', '[data-faq]', '[data-menu] .dishlist'].forEach(sel => {
+    ['.services', '[data-week]', '[data-faq]'].forEach(sel => {
       const box = $(sel);
       if (!box) return;
       const items = [...box.children];

@@ -149,7 +149,7 @@
     <section class="manifesto" id="chi-siamo" aria-labelledby="t-chi">
       <div class="wrap manifesto__grid">
         <h2 class="label" id="t-chi">Chi siamo</h2>
-        <div>
+        <div class="manifesto__panel">
           <p class="manifesto__text" data-ink>Riva Bianca è uno stabilimento sul lungomare di Pescara. Trecento metri di sabbia chiara, ombrelloni in tela écru distanziati come una volta, una cucina che lavora solo il pescato dell'Adriatico e un forno a legna per la pizza a lunga lievitazione.</p>
           <p class="manifesto__sign">Dal 2001, ogni estate e anche d'inverno.</p>
         </div>
@@ -200,11 +200,11 @@
             <div class="chap__media">
               <picture>
                 <source media="(max-aspect-ratio: 1/1)" srcset="assets/video/tour-tramonto-mobile.webp">
-                <img src="assets/video/tour-tramonto-desktop.webp" width="1920" height="1080" alt="Il riflesso dorato del sole sulla battigia al tramonto" loading="lazy" decoding="async">
+                <img src="assets/video/tour-tramonto-desktop.webp" width="1920" height="1080" alt="Il sole tramonta sull'orizzonte e si riflette sul mare mosso" loading="lazy" decoding="async">
               </picture>
               <video muted playsinline loop preload="none" aria-hidden="true"></video>
             </div>
-            <div class="wrap chap__text"><span class="chap__n">04</span><h3 class="chap__title" data-chars>Il tramonto</h3><p>Il cielo si accende alle spalle della città e il mare diventa oro. È l'ora dell'aperitivo.</p></div>
+            <div class="wrap chap__text"><span class="chap__n">04</span><h3 class="chap__title" data-chars>Il tramonto</h3><p>Il sole scende sull'orizzonte e accende il mare di riflessi. È l'ora dell'aperitivo e della cena in riva.</p></div>
           </li>
         </ol>
         <ol class="tour__dots" aria-hidden="true"><li class="is-active"></li><li></li><li></li><li></li></ol>
@@ -315,7 +315,7 @@
         <article class="pillar pillar--low">
           <figure class="pic pic--portrait" data-reveal="top">
             <div class="pic__inner" data-parallax>
-              <img src="assets/img/pizza-640.webp" srcset="assets/img/pizza-640.webp 640w, assets/img/pizza-1200.webp 1200w" sizes="(min-width: 900px) 34vw, 92vw" width="1200" height="1800" alt="Il pizzaiolo stende due pizze sul bancone infarinato" loading="lazy" decoding="async">
+              <img src="assets/img/pizza-forno-640.webp" srcset="assets/img/pizza-forno-640.webp 640w, assets/img/pizza-forno-1200.webp 1200w" sizes="(min-width: 900px) 34vw, 92vw" width="1200" height="1500" alt="Pizza margherita appena sfornata davanti al forno a legna acceso" loading="lazy" decoding="async">
             </div>
           </figure>
           <h3 class="h3">Pizza gourmet a lunga lievitazione</h3>
@@ -368,10 +368,17 @@
       <div class="wrap">
         <div class="section-head section-head--dark">
           <h2 class="h2" id="t-menu" data-chars>Il menù</h2>
-          <div class="section-head__body"><p>Cambia con il mare e con le stagioni. Qui trovi una giornata d'estate tipo, dai crudi al bicchiere della staffa.</p></div>
+          <div class="section-head__body"><p>Cambia con il mare e con le stagioni. Sfoglia il nostro libro di bordo: una giornata d'estate tipo, dai crudi al bicchiere della staffa.</p></div>
         </div>
-        <div class="tabs" role="tablist" aria-label="Categorie del menù" data-tabs></div>
-        <div data-menu></div>
+        <div class="libro" data-libro>
+          <nav class="libro__marks" aria-label="Sezioni del menù" data-libro-marks></nav>
+          <div class="libro__book" id="libro-book" tabindex="0" role="region" aria-roledescription="libro" aria-label="Il menù, usa le frecce per sfogliare" data-libro-book></div>
+          <div class="libro__nav">
+            <button class="round" type="button" aria-label="Pagina precedente" data-libro-prev><svg aria-hidden="true" style="transform:scaleX(-1)"><use href="#i-arrow"/></svg></button>
+            <p class="libro__where" aria-live="polite" data-libro-where></p>
+            <button class="round" type="button" aria-label="Pagina successiva" data-libro-next><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          </div>
+        </div>
         <div class="menu__foot">
           <p><strong>Menù di esempio.</strong> Piatti e prezzi sono indicativi e cambiano secondo il pescato.</p>
           <p>Per informazioni su allergeni e intolleranze chiedi al personale. Il pesce servito crudo è abbattuto a temperatura negativa secondo la normativa (Reg. CE 853/2004).</p>
@@ -384,15 +391,22 @@
       <div class="wrap book__grid">
         <div class="book__aside">
           <h2 class="h2 lines" id="t-book" data-lines><span class="ln"><span>Prenota</span></span><span class="ln"><span>un tavolo</span></span></h2>
-          <p>Tre passaggi e ci sentiamo per la conferma. Per gruppi di più di 12 persone chiamaci.</p>
+          <p>Tre passaggi e ci sentiamo per la conferma. Puoi scegliere il tavolo sulla piantina. Per gruppi di più di 12 persone chiamaci.</p>
+          <div class="callbox">
+            <p class="callbox__label">Preferisci chiamare?</p>
+            <a class="callbox__num" data-cfg-tel-num></a>
+            <div class="callbox__btns">
+              <a class="btn btn--dark btn--icon" data-cfg-tel-short><svg aria-hidden="true"><use href="#i-phone"/></svg><span>Chiama ora</span></a>
+              <a class="btn btn--line btn--icon" data-wa data-wa-msg="tavolo" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg><span>WhatsApp</span></a>
+            </div>
+          </div>
           <dl class="hours" data-hours-resto></dl>
-          <a class="link" data-cfg-tel></a>
         </div>
 
         <form class="form steps" data-form="tavolo" novalidate>
           <ol class="steps__nav" aria-label="Passaggi">
             <li class="is-current" data-step-dot>Quando</li>
-            <li data-step-dot>Ospiti</li>
+            <li data-step-dot>Tavolo</li>
             <li data-step-dot>Contatti</li>
           </ol>
 
@@ -413,7 +427,7 @@
           </fieldset>
 
           <fieldset class="step" data-step hidden>
-            <legend class="sr-only">Passaggio 2 di 3: ospiti</legend>
+            <legend class="sr-only">Passaggio 2 di 3: persone e tavolo</legend>
             <div class="field">
               <span id="lbl-persone">Persone</span>
               <div class="stepper" aria-labelledby="lbl-persone">
@@ -422,13 +436,24 @@
                 <button type="button" data-step-plus aria-label="Una persona in più">+</button>
               </div>
             </div>
-            <div class="field">
-              <span id="lbl-pref">Dove preferisci</span>
-              <div class="cards" role="radiogroup" aria-labelledby="lbl-pref">
-                <label><input type="radio" name="preferenza" value="Terrazza" checked><span><b>Terrazza</b><small>Vista mare, all'aperto</small></span></label>
-                <label><input type="radio" name="preferenza" value="Sala"><span><b>Sala</b><small>Al coperto, vetrate sul mare</small></span></label>
-                <label><input type="radio" name="preferenza" value="In riva al mare"><span><b>In riva</b><small>Tavolo sulla sabbia, su richiesta</small></span></label>
+            <div class="field tm">
+              <span id="lbl-tavolo">Scegli il tavolo <small>(facoltativo: se non scegli, lo assegniamo noi)</small></span>
+              <div class="bm__map tm__map" data-tm-viewport>
+                <div class="bm__canvas" data-tm-canvas></div>
+                <div class="bm__zoom">
+                  <button type="button" data-tm-zoom="out" aria-label="Riduci la piantina"><svg aria-hidden="true" viewBox="0 0 20 20"><path d="M4 10h12"/></svg></button>
+                  <button type="button" data-tm-zoom="in" aria-label="Ingrandisci la piantina"><svg aria-hidden="true" viewBox="0 0 20 20"><path d="M4 10h12M10 4v12"/></svg></button>
+                </div>
               </div>
+              <ul class="bm__legend tm__legend">
+                <li><i></i>Libero</li>
+                <li><i class="is-busy"></i>Occupato</li>
+                <li><i class="is-sel"></i>Il tuo tavolo</li>
+                <li><i class="is-rom"></i>Tavolo romantico</li>
+              </ul>
+              <div class="bm__card tm__card" data-tm-card aria-live="polite" hidden></div>
+              <p class="tm__pick" data-tm-pick>Nessun tavolo scelto: lo assegniamo noi.</p>
+              <input type="hidden" name="tavolo" value="" data-tm-input>
             </div>
           </fieldset>
 
@@ -452,6 +477,21 @@
           <p class="form__msg" role="status" aria-live="polite" data-msg></p>
           <p class="form__demo" data-demo hidden>Modulo dimostrativo: senza chiave Web3Forms la prenotazione non viene inviata. Usa "Invia su WhatsApp" per provarlo.</p>
         </form>
+      </div>
+
+      <div class="wrap">
+        <article class="romantic" aria-labelledby="t-romantic">
+          <figure class="romantic__pic">
+            <img src="assets/img/cena-romantica-800.webp" srcset="assets/img/cena-romantica-800.webp 800w, assets/img/cena-romantica-1600.webp 1600w" sizes="(min-width: 900px) 58vw, 92vw" width="1600" height="1066" loading="lazy" alt="Tavolo per due apparecchiato sulla sabbia con candele e fiori, il mare al tramonto">
+          </figure>
+          <div class="romantic__body">
+            <p class="romantic__kicker"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#tm-candle-ico"/></svg>Solo quattro tavoli, ogni sera</p>
+            <h3 class="romantic__title" id="t-romantic">Cena romantica in riva al mare</h3>
+            <p>Un tavolo per due sulla sabbia, a pochi passi dall'acqua. Candele, fiori freschi e il pescato del giorno servito mentre il sole scende.</p>
+            <p class="romantic__names">Tavolo Conchiglia, Faro, Stella Marina e Tramonto.</p>
+            <button class="btn btn--light" type="button" data-romantic>Prenota questo tavolo</button>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -713,6 +753,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="js/main.js" defer></script>
   <script src="js/mappa.js" defer></script>
+  <script src="js/libro.js" defer></script>
+  <script src="js/tavoli.js" defer></script>
   <script src="js/scene.js" defer></script>
 </body>
 </html>

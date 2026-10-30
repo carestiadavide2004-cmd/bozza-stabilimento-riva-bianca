@@ -117,8 +117,9 @@ window.RB = {
     occupatiDemo: 0.34
   },
 
+  // Menù: ogni sezione è una doppia pagina del "libro di bordo"; nota = frase sotto il titolo
   menu: [
-    { id: "crudi", nome: "Crudi e ostriche", piatti: [
+    { id: "crudi", nome: "Crudi e ostriche", nota: "Aperti al banco con il pescato della mattina.", piatti: [
       ["Crudo dell'Adriatico", "Scampi, mazzancolle, tartare di tonno e carpaccio del giorno", "38"],
       ["Ostrica Gillardeau n. 2", "Al pezzo, con limone e mignonette allo scalogno", "6"],
       ["Tartare di tonno", "Stracciatella, limone candito e capperi di Pantelleria", "22"],
@@ -126,7 +127,7 @@ window.RB = {
       ["Scampi crudi", "Quattro pezzi, sale Maldon e lime", "24"],
       ["Ostrica Fine de Claire", "Al pezzo", "4"]
     ]},
-    { id: "antipasti", nome: "Antipasti", piatti: [
+    { id: "antipasti", nome: "Antipasti", nota: "Per cominciare, da dividere al centro del tavolo.", piatti: [
       ["Polpo arrosto", "Crema di patate affumicate e olive intosso", "18"],
       ["Alici marinate", "Limone di Sorrento, mentuccia e pane tostato", "14"],
       ["Cozze e vongole in guazzetto", "Pomodorino, aglio dolce e pane bruscato", "16"],
@@ -134,7 +135,7 @@ window.RB = {
       ["Fiori di zucca", "Ripieni di baccalà mantecato", "15"],
       ["Insalata di mare tiepida", "Sedano, patate e prezzemolo", "18"]
     ]},
-    { id: "primi", nome: "Primi di mare", piatti: [
+    { id: "primi", nome: "Primi di mare", nota: "Pasta trafilata al bronzo e sughi di mare.", piatti: [
       ["Spaghetti alle vongole veraci", "Bottarga di muggine e limone", "22"],
       ["Chitarra all'astice blu", "Pomodorino del piennolo e basilico", "32"],
       ["Paccheri con lo scorfano", "Pomodorini confit e olive taggiasche", "24"],
@@ -142,7 +143,7 @@ window.RB = {
       ["Linguine allo scoglio", "Cozze, vongole, gamberi e calamari", "24"],
       ["Risotto ai frutti di mare", "Minimo due persone, al cucchiaio", "22"]
     ]},
-    { id: "secondi", nome: "Secondi", piatti: [
+    { id: "secondi", nome: "Secondi", nota: "Il pescato del giorno, intero o in trancio.", piatti: [
       ["Brodetto alla pescarese", "Pescato del giorno, peperone dolce e pane", "34"],
       ["Rombo al forno", "Patate, olive e pomodorini", "32"],
       ["Pescato del giorno alla griglia", "All'etto, chiedi al personale", "7 / hg"],
@@ -150,7 +151,7 @@ window.RB = {
       ["Trancio di ricciola", "Caponata di verdure e basilico", "28"],
       ["Grigliata mista", "Scampi, calamaro, gamberi e pesce del giorno", "36"]
     ]},
-    { id: "pizze", nome: "Pizze gourmet", piatti: [
+    { id: "pizze", nome: "Pizze gourmet", nota: "Impasto a 72 ore, cotta nel forno a legna.", piatti: [
       ["Margherita di Riva", "San Marzano DOP, fiordilatte di Agerola, basilico", "11"],
       ["Cruda di mare", "Base bianca, stracciatella, tartare di gambero e lime aggiunti a crudo", "22"],
       ["Ventricina e miele", "Fiordilatte, ventricina vastese e miele di castagno", "16"],
@@ -158,14 +159,14 @@ window.RB = {
       ["Alici e scarola", "Fiordilatte, scarola ripassata, alici del Cantabrico, olive", "16"],
       ["Mortadella e pistacchio", "Fiordilatte, mortadella IGP, stracciatella, pistacchio", "17"]
     ]},
-    { id: "dolci", nome: "Dolci", piatti: [
+    { id: "dolci", nome: "Dolci", nota: "Fatti in casa, ogni mattina.", piatti: [
       ["Semifreddo al parrozzo", "Cioccolato fondente e mandorle tostate", "9"],
       ["Tiramisù espresso", "Preparato al momento", "8"],
       ["Babà al rum", "Crema chantilly e frutti rossi", "9"],
       ["Sorbetto al limone", "Limone e basilico", "6"],
       ["Crostata di stagione", "Frutta fresca e crema pasticcera", "8"]
     ]},
-    { id: "bere", nome: "Cocktail e vini", piatti: [
+    { id: "bere", nome: "Cocktail e vini", nota: "Aperitivo al tramonto e vini d'Abruzzo.", piatti: [
       ["Spritz Riva", "Bitter, prosecco e soda alla pesca bianca", "10"],
       ["Negroni", "Classico, con arancia", "11"],
       ["Gin tonic al rosmarino", "Gin italiano e tonica secca", "12"],
@@ -175,6 +176,29 @@ window.RB = {
       ["Franciacorta Brut", "Al calice", "10"]
     ]}
   ],
+
+  // Piantina dei tavoli: zone dal mare verso la sala. Ogni fila elenca i posti dei tavoli
+  // (2, 4 o 6); un tavolo con nome è un oggetto { nome, posti, romantico }.
+  tavoli: {
+    zone: [
+      { id: "riva", nome: "In riva al mare", nota: "Sulla sabbia, a pochi passi dall'acqua", file: [[
+        { nome: "Tavolo Conchiglia", posti: 2, romantico: true },
+        { nome: "Tavolo Faro", posti: 2, romantico: true },
+        { nome: "Tavolo Stella Marina", posti: 2, romantico: true },
+        { nome: "Tavolo Tramonto", posti: 2, romantico: true }
+      ]] },
+      { id: "terrazza", nome: "Terrazza", nota: "All'aperto, sul pontile con vista mare", file: [
+        [2, 4, 4, 4, 4, 2],
+        [4, 6, 6, 4],
+        [2, 4, 4, 4, 4, 2]
+      ] },
+      { id: "sala", nome: "Sala", nota: "Al coperto, con le vetrate sul mare", file: [
+        [4, 4, 4, 4, 4],
+        [2, 6, 6, 2]
+      ] }
+    ],
+    occupatiDemo: 0.32   // quota di tavoli occupati nella demo (casuale ma fissa per data e fascia)
+  },
 
   // foto: [nome file senza misura, larghezza piccola, larghezza grande]
   eventi: [
