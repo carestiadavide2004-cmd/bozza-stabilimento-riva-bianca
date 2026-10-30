@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script>
+    (function (h) {
+      h.classList.add('js');
+      try {
+        var calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!calm) h.classList.add('motion');
+        if (!calm && !sessionStorage.getItem('rb-intro')) h.classList.add('has-intro');
+      } catch (e) {}
+    })(document.documentElement);
+  </script>
+
+  <title>Riva Bianca – Stabilimento balneare e ristorante di pesce a Pescara</title>
+  <meta name="description" content="Stabilimento balneare sul lungomare di Pescara con ristorante di pesce dell'Adriatico, pizza gourmet a lunga lievitazione, eventi e matrimoni in riva al mare.">
+  <!-- Bozza dimostrativa: non indicizzare -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0B2633">
+  <link rel="canonical" href="https://carestiadavide2004-cmd.github.io/bozza-stabilimento-riva-bianca/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Riva Bianca">
+  <meta property="og:title" content="Riva Bianca – Spiaggia, ristorante di mare ed eventi a Pescara">
+  <meta property="og:description" content="Il giorno in riva, la sera a tavola. Ombrelloni in prima fila, crudi dell'Adriatico, pizza gourmet e serate al tramonto.">
+  <meta property="og:url" content="https://carestiadavide2004-cmd.github.io/bozza-stabilimento-riva-bianca/">
+  <meta property="og:image" content="https://carestiadavide2004-cmd.github.io/bozza-stabilimento-riva-bianca/assets/img/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400&family=Jost:wght@400;500&display=swap">
+
+  <link rel="preload" as="image" href="assets/video/hero-mobile.webp" media="(max-aspect-ratio: 1/1)">
+  <link rel="preload" as="image" href="assets/video/hero-desktop.webp" media="(min-aspect-ratio: 1/1)">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <defs>
+      <g id="rb-letters">
+        <path d="M396 -768V-772H693Q789 -772 856 -815Q922 -858 956 -938Q990 -1018 990 -1130Q990 -1242 956 -1324Q922 -1406 855 -1451Q789 -1496 693 -1496H36V-1500H707Q862 -1500 979 -1462Q1095 -1423 1160 -1342Q1224 -1260 1224 -1130Q1224 -1000 1164 -920Q1103 -841 988 -804Q872 -768 707 -768ZM36 0V-4H688V0ZM250 -2V-1498H474V-2ZM1197 11Q1106 11 1055 -21Q1004 -54 980 -110Q956 -166 950 -235Q944 -304 943 -378Q942 -452 936 -521Q929 -591 906 -647Q882 -702 830 -735Q778 -768 686 -768H396V-772H760Q905 -772 990 -730Q1075 -688 1117 -620Q1159 -551 1172 -469Q1186 -386 1186 -304Q1187 -221 1189 -153Q1191 -84 1210 -42Q1229 -1 1282 -1Q1314 -1 1342 -8Q1371 -15 1392 -25L1394 -23Q1370 -10 1320 1Q1270 11 1197 11Z"/>
+        <path transform="translate(1300 0)" d="M36 0V-4H652Q737 -4 807 -58Q877 -113 919 -207Q962 -301 962 -420Q962 -539 919 -616Q877 -693 807 -730Q737 -768 652 -768H418V-772H684Q829 -772 950 -738Q1070 -704 1142 -625Q1214 -547 1214 -414Q1214 -191 1073 -96Q933 0 684 0ZM215 -2V-1498H440V-2ZM418 -768V-772H633Q707 -772 773 -807Q839 -842 880 -916Q922 -991 922 -1110Q922 -1229 880 -1316Q839 -1402 773 -1449Q707 -1496 633 -1496H36V-1500H644Q877 -1500 1016 -1412Q1155 -1325 1155 -1130Q1155 -937 1024 -853Q892 -768 644 -768Z"/>
+      </g>
+      <path id="rb-wave" d="M0 300C210 210 420 210 628 300S1047 390 1257 300 1676 210 1885 300 2304 390 2514 300"/>
+    </defs>
+    <symbol id="rb-mono" viewBox="-60 -1580 2634 1980"><use href="#rb-letters" fill="currentColor"/><use href="#rb-wave" fill="none" stroke="#2FB5B0" stroke-width="64" stroke-linecap="round"/></symbol>
+    <symbol id="i-wave" viewBox="0 0 48 12"><path d="M1 6c4-4 8-4 11.5 0S19 10 23 6s8-4 11.5 0S41 10 47 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 3.5h2.6l1.4 4.3-1.9 1.3a12.4 12.4 0 0 0 6.2 6.2l1.3-1.9 4.3 1.4v2.6a2 2 0 0 1-2.2 2A16.6 16.6 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 3.2a8.8 8.8 0 0 0-7.6 13.2L3.2 20.8l4.5-1.2A8.8 8.8 0 1 0 12 3.2Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9.2 8.2c.2-.4.5-.4.7-.4h.5c.2 0 .4 0 .6.5l.7 1.6c.1.2 0 .4-.1.6l-.5.6c-.1.1-.2.3 0 .5a6 6 0 0 0 2.9 2.5c.2.1.4 0 .5-.1l.7-.8c.2-.2.4-.2.6-.1l1.6.8c.2.1.4.2.4.4 0 .4-.1 1.1-.6 1.5-.5.5-1.4.8-2.2.6-2.6-.6-5.2-3-6-5.3-.3-.9 0-1.8.3-2.3Z" fill="currentColor"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M9 6v12M15 6v12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5Z" fill="currentColor"/></symbol>
+    <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor"/></symbol>
+    <symbol id="i-fb" viewBox="0 0 24 24"><path d="M13.5 20.5v-7.3h2.6l.4-3h-3V8.4c0-.9.3-1.5 1.5-1.5h1.6V4.2a20 20 0 0 0-2.3-.1c-2.3 0-3.8 1.4-3.8 3.9v2.2H8v3h2.5v7.3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-tt" viewBox="0 0 24 24"><path d="M14 3.5v11.2a3.3 3.3 0 1 1-3.3-3.3m3.3-7.9c.3 2.4 2 4.2 4.5 4.4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-doccia" viewBox="0 0 24 24"><path d="M5 20V7a3 3 0 0 1 3-3h1a3 3 0 0 1 3 3m-5 0h10m-8.5 3.5v1m3-1v1m3-1v1m-6 3v1m3-1v1m3-1v1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-bar" viewBox="0 0 24 24"><path d="M5 4.5h14l-7 8Zm7 8v7m-4 0h8M15.5 4.5 18 2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-vassoio" viewBox="0 0 24 24"><path d="M3.5 17h17M5 17a7 7 0 0 1 14 0M12 8.5V7m-1.5 0h3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M3.5 9.5a12 12 0 0 1 17 0M6.5 12.8a7.7 7.7 0 0 1 11 0M9.5 16a3.4 3.4 0 0 1 5 0" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="12" cy="19" r="1" fill="currentColor"/></symbol>
+    <symbol id="i-telo" viewBox="0 0 24 24"><path d="M6 4h12v13H6zM6 17v3h12v-3M6 8h12M6 11.5h12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <a class="skip-link" href="#contenuto">Vai al contenuto</a>
+
+  <!-- Intro: solo alla prima visita della sessione, assente con "riduci movimento" -->
+  <div class="intro" aria-hidden="true" data-intro>
+    <svg class="intro__mark" viewBox="-60 -1580 2634 1980">
+      <use class="intro__letters" href="#rb-letters" fill="currentColor"/>
+      <use class="intro__wave" href="#rb-wave" fill="none" stroke="#2FB5B0" stroke-width="56" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <header class="header" data-header>
+    <div class="wrap header__inner">
+      <a class="brand" href="#top" aria-label="Riva Bianca, torna all'inizio">
+        <svg class="brand__mono" aria-hidden="true"><use href="#rb-mono"/></svg>
+        <span class="brand__name">Riva Bianca</span>
+      </a>
+      <nav class="nav" aria-label="Sezioni">
+        <a href="#spiaggia">Spiaggia</a>
+        <a href="#ristorante">Ristorante</a>
+        <a href="#menu">Menù</a>
+        <a href="#eventi">Eventi</a>
+        <a href="#contatti">Contatti</a>
+      </nav>
+      <a class="btn btn--sm header__cta" href="#prenota">Prenota</a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="menu-mobile" data-burger>
+        <span class="sr-only" data-burger-label>Apri il menu</span><i></i><i></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="mnav" id="menu-mobile" data-mnav inert>
+    <nav class="mnav__links" aria-label="Sezioni">
+      <a href="#spiaggia">La spiaggia</a>
+      <a href="#ristorante">Il ristorante</a>
+      <a href="#menu">Il menù</a>
+      <a href="#prenota">Prenota un tavolo</a>
+      <a href="#eventi">Eventi</a>
+      <a href="#galleria">Galleria</a>
+      <a href="#contatti">Contatti</a>
+    </nav>
+    <p class="mnav__meta"><span data-cfg="indirizzo"></span><br><a data-cfg-tel></a></p>
+  </div>
+
+  <main id="contenuto">
+
+    <!-- 1. HERO -->
+    <section class="hero" id="top">
+      <div class="hero__media">
+        <video class="vid" data-video="hero" muted playsinline loop autoplay preload="auto" aria-hidden="true"></video>
+      </div>
+      <div class="hero__shade" aria-hidden="true"></div>
+      <div class="wrap hero__content">
+        <div class="hero__top">
+          <h1 class="hero__title">
+            <span class="hero__kicker">Stabilimento balneare e ristorante di mare a Pescara</span>
+            <span class="display lines" data-hero-lines><span class="ln"><span>Il giorno in riva,</span></span><span class="ln"><span>la sera a tavola.</span></span></span>
+          </h1>
+          <p class="status" data-status><span class="status__dot" aria-hidden="true"></span><span data-status-text>Ristorante aperto tutto l'anno</span></p>
+        </div>
+        <!-- i pulsanti stanno sulla sabbia: la riva con la schiuma resta libera -->
+        <div class="hero__actions">
+          <a class="btn btn--dark" href="#prenota">Prenota un tavolo</a>
+          <a class="btn btn--line" href="#ombrellone">Prenota l'ombrellone</a>
+          <a class="btn btn--line btn--icon" data-wa href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg><span>WhatsApp</span></a>
+        </div>
+      </div>
+      <button class="vid-toggle" type="button" data-vid-toggle="hero" aria-label="Metti in pausa il video">
+        <svg class="i-pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="i-play" aria-hidden="true"><use href="#i-play"/></svg>
+      </button>
+    </section>
+
+    <!-- 2. MANIFESTO -->
+    <section class="manifesto" id="chi-siamo" aria-labelledby="t-chi">
+      <div class="wrap manifesto__grid">
+        <h2 class="label" id="t-chi">Chi siamo</h2>
+        <div>
+          <p class="manifesto__text" data-ink>Riva Bianca è uno stabilimento sul lungomare di Pescara. Trecento metri di sabbia chiara, ombrelloni in tela écru distanziati come una volta, una cucina che lavora solo il pescato dell'Adriatico e un forno a legna per la pizza a lunga lievitazione.</p>
+          <p class="manifesto__sign">Dal 2001, ogni estate e anche d'inverno.</p>
+        </div>
+      </div>
+      <div class="wrap">
+        <svg class="riva" viewBox="0 0 1200 24" preserveAspectRatio="none" aria-hidden="true" data-riva><path d="M0 12C100 3 200 3 300 12S500 21 600 12 800 3 900 12 1100 21 1200 12" pathLength="1"/></svg>
+        <dl class="stats" data-stats></dl>
+        <p class="note">Numeri di esempio.</p>
+      </div>
+    </section>
+
+    <!-- 3. TOUR ALLO SCORRIMENTO -->
+    <section class="tour" id="tour" aria-labelledby="t-tour" data-tour>
+      <h2 class="sr-only" id="t-tour">Il tour: dal mare alla terrazza</h2>
+      <div class="tour__sticky">
+        <canvas class="tour__canvas" aria-hidden="true" data-tour-canvas></canvas>
+        <div class="tour__shade" aria-hidden="true"></div>
+        <ol class="tour__stages">
+          <li class="stage" data-stage>
+            <picture class="stage__pic">
+              <source media="(max-aspect-ratio: 1/1)" srcset="assets/tour/m/008.webp">
+              <img src="assets/tour/d/008.webp" width="1280" height="720" alt="Il mare turchese visto dall'alto" loading="lazy" decoding="async">
+            </picture>
+            <div class="stage__text"><span class="stage__n">01</span><h3>Il mare</h3><p>L'Adriatico davanti al lettino. Acqua bassa e chiara per i primi metri, ideale anche per i bambini.</p></div>
+          </li>
+          <li class="stage" data-stage>
+            <picture class="stage__pic">
+              <source media="(max-aspect-ratio: 1/1)" srcset="assets/tour/m/036.webp">
+              <img src="assets/tour/d/036.webp" width="1280" height="720" alt="La spiaggia di sabbia bianca dall'alto" loading="lazy" decoding="async">
+            </picture>
+            <div class="stage__text"><span class="stage__n">02</span><h3>La spiaggia</h3><p>Trecento metri di sabbia fine, file ordinate e quattro metri tra un ombrellone e l'altro.</p></div>
+          </li>
+          <li class="stage stage--alt" data-stage>
+            <picture class="stage__pic">
+              <source media="(max-aspect-ratio: 1/1)" srcset="assets/tour/m/062.webp">
+              <img src="assets/tour/d/062.webp" width="1280" height="720" alt="Le terrazze sul mare all'imbrunire" loading="lazy" decoding="async">
+            </picture>
+            <div class="stage__text"><span class="stage__n">03</span><h3>La terrazza</h3><p>Centoventi coperti affacciati sulla riva: crudi a pranzo, cena a lume di candela.</p></div>
+          </li>
+          <li class="stage" data-stage>
+            <picture class="stage__pic">
+              <source media="(max-aspect-ratio: 1/1)" srcset="assets/tour/m/092.webp">
+              <img src="assets/tour/d/092.webp" width="1280" height="720" alt="Il tramonto dorato sulla costa" loading="lazy" decoding="async">
+            </picture>
+            <div class="stage__text"><span class="stage__n">04</span><h3>Il tramonto</h3><p>Il cielo si accende alle spalle della città e il mare diventa rosa. È l'ora dell'aperitivo.</p></div>
+          </li>
+        </ol>
+        <div class="tour__bar" aria-hidden="true"><span data-tour-bar></span></div>
+      </div>
+    </section>
+
+    <!-- 4. LA SPIAGGIA -->
+    <section class="beach" id="spiaggia" aria-labelledby="t-spiaggia">
+      <div class="wrap section-head">
+        <h2 class="h2 lines" id="t-spiaggia" data-lines><span class="ln"><span>La spiaggia</span></span></h2>
+        <div class="section-head__body">
+          <p>Ombrelloni in tela écru, lettini in teak e file larghe, perché in riva si viene per stare tranquilli. Il bar apre con il primo caffè e chiude con l'ultimo spritz.</p>
+          <p class="meta" data-season></p>
+        </div>
+      </div>
+
+      <div class="grow" data-grow>
+        <div class="grow__frame" data-grow-frame>
+          <video class="vid" data-video="spiaggia" muted playsinline loop preload="none" aria-hidden="true"></video>
+          <p class="grow__caption">La prima fila è a dieci passi dall'acqua.</p>
+        </div>
+      </div>
+
+      <div class="wrap split">
+        <figure class="pic pic--tall" data-curtain>
+          <div class="pic__inner" data-parallax>
+            <img src="assets/img/spiaggia-ombrelloni-800.webp" srcset="assets/img/spiaggia-ombrelloni-800.webp 800w, assets/img/spiaggia-ombrelloni-1600.webp 1600w" sizes="(min-width: 900px) 40vw, 92vw" width="1600" height="1067" alt="File di ombrelloni a righe bianche e blu sulla spiaggia" loading="lazy" decoding="async">
+          </div>
+        </figure>
+        <div class="split__text">
+          <h3 class="h3">Ombrelloni e lettini</h3>
+          <p>Ogni postazione ha un ombrellone, due lettini e un tavolino. Le prime file si prenotano anche a giornata, dalle seconde in poi trovi posto quasi sempre.</p>
+          <ul class="services" data-services></ul>
+        </div>
+      </div>
+
+      <div class="wrap pricing">
+        <div class="pricing__head">
+          <h3 class="h3">Listino della stagione</h3>
+          <p class="note">Listino di esempio. Prezzi per un ombrellone e due lettini, teli inclusi.</p>
+        </div>
+        <div class="rail" data-rail>
+          <div class="rail__track pricing__track" data-price-list></div>
+        </div>
+      </div>
+
+      <div class="wrap booking" id="ombrellone">
+        <figure class="pic booking__pic" data-curtain>
+          <div class="pic__inner" data-parallax>
+            <img src="assets/img/spiaggia-lettini-640.webp" srcset="assets/img/spiaggia-lettini-640.webp 640w, assets/img/spiaggia-lettini-1200.webp 1200w" sizes="(min-width: 900px) 45vw, 92vw" width="1200" height="1800" alt="Lettini bianchi sulla sabbia davanti al mare turchese, vista dall'alto" loading="lazy" decoding="async">
+          </div>
+        </figure>
+        <form class="form form--dark" data-form="ombrellone" novalidate>
+          <h3 class="h3">Prenota l'ombrellone</h3>
+          <p class="form__intro">Scegli il periodo e la fila: ti richiamiamo per confermare.</p>
+          <div class="grid2">
+            <label class="field"><span>Dal</span><input type="date" name="dal" required data-season-date></label>
+            <label class="field"><span>Al <small>(facoltativo)</small></span><input type="date" name="al" data-season-date></label>
+            <label class="field"><span>Fila preferita</span>
+              <select name="fila" required>
+                <option value="Prima fila">Prima fila</option>
+                <option value="Seconda fila">Seconda fila</option>
+                <option value="Dalla terza fila">Dalla terza fila</option>
+                <option value="Indifferente">Indifferente</option>
+              </select>
+            </label>
+            <label class="field"><span>Lettini</span>
+              <select name="lettini" required>
+                <option>1</option><option selected>2</option><option>3</option><option>4</option>
+              </select>
+            </label>
+            <label class="field"><span>Nome</span><input name="nome" required autocomplete="name"></label>
+            <label class="field"><span>Telefono</span><input name="telefono" type="tel" required autocomplete="tel" inputmode="tel"></label>
+          </div>
+          <label class="check"><input type="checkbox" name="privacy" required data-consent><span>Ho letto l'<a href="privacy.html">informativa privacy</a></span></label>
+          <div class="form__actions">
+            <button class="btn btn--light" type="submit">Invia la richiesta</button>
+            <button class="btn btn--line-light btn--icon" type="button" data-wa-send><svg aria-hidden="true"><use href="#i-wa"/></svg><span>Invia su WhatsApp</span></button>
+          </div>
+          <p class="form__msg" role="status" aria-live="polite" data-msg></p>
+          <p class="form__demo" data-demo hidden>Modulo dimostrativo: senza chiave Web3Forms la richiesta non viene inviata. Usa "Invia su WhatsApp" per provarlo.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Fascia di testo lenta -->
+    <div class="ribbon" aria-hidden="true" data-ribbon>
+      <div class="ribbon__track">
+        <span>Crudo dell'Adriatico</span><svg><use href="#i-wave"/></svg><span>Chitarra all'astice</span><svg><use href="#i-wave"/></svg><span>Pizza a 72 ore</span><svg><use href="#i-wave"/></svg><span>Aperitivo al tramonto</span><svg><use href="#i-wave"/></svg><span>Brodetto alla pescarese</span><svg><use href="#i-wave"/></svg><span>Piedi nella sabbia</span><svg><use href="#i-wave"/></svg>
+        <span>Crudo dell'Adriatico</span><svg><use href="#i-wave"/></svg><span>Chitarra all'astice</span><svg><use href="#i-wave"/></svg><span>Pizza a 72 ore</span><svg><use href="#i-wave"/></svg><span>Aperitivo al tramonto</span><svg><use href="#i-wave"/></svg><span>Brodetto alla pescarese</span><svg><use href="#i-wave"/></svg><span>Piedi nella sabbia</span><svg><use href="#i-wave"/></svg>
+      </div>
+    </div>
+
+    <!-- 5. IL RISTORANTE -->
+    <section class="resto" id="ristorante" aria-labelledby="t-resto">
+      <div class="wrap section-head">
+        <h2 class="h2 lines" id="t-resto" data-lines><span class="ln"><span>Il ristorante</span></span></h2>
+        <div class="section-head__body">
+          <p>Ogni mattina il pescato arriva dal porto di Pescara e decide la carta del giorno. Pochi ingredienti, cotture brevi, nessuna salsa a coprire il mare.</p>
+        </div>
+      </div>
+
+      <div class="wrap chef">
+        <figure class="pic chef__pic" data-curtain>
+          <div class="pic__inner" data-parallax>
+            <img src="assets/img/chef-640.webp" srcset="assets/img/chef-640.webp 640w, assets/img/chef-1200.webp 1200w" sizes="(min-width: 900px) 38vw, 92vw" width="1200" height="1800" alt="Le mani dello chef impiattano un piatto con la pinzetta" loading="lazy" decoding="async">
+          </div>
+        </figure>
+        <div class="chef__text">
+          <p class="label">Lo chef</p>
+          <h3 class="h3" data-cfg="chefNome"></h3>
+          <blockquote class="quote"><p data-cfg="chefCitazione"></p></blockquote>
+          <p>Cresciuto tra le barche del porto canale, ha lavorato in cucine stellate tra Marche e Liguria prima di tornare a casa. In carta trovi il brodetto di sua nonna, accanto ai crudi più puliti della costa.</p>
+          <p class="note">Nome dello chef di esempio.</p>
+        </div>
+      </div>
+
+      <div class="wrap pillars">
+        <article class="pillar">
+          <figure class="pic pic--portrait" data-curtain>
+            <div class="pic__inner" data-parallax>
+              <img src="assets/img/crudi-640.webp" srcset="assets/img/crudi-640.webp 640w, assets/img/crudi-1200.webp 1200w" sizes="(min-width: 900px) 34vw, 92vw" width="1200" height="1800" alt="Ostriche aperte su piatti bianchi con spicchi di limone" loading="lazy" decoding="async">
+            </div>
+          </figure>
+          <h3 class="h3">Pesce dell'Adriatico</h3>
+          <p>Scampi, mazzancolle, ricciola e pesce azzurro dalle barche di zona. Il crudo si sceglie al banco, il pescato del giorno si cuoce intero.</p>
+        </article>
+        <article class="pillar pillar--low">
+          <figure class="pic pic--portrait" data-curtain>
+            <div class="pic__inner" data-parallax>
+              <img src="assets/img/pizza-640.webp" srcset="assets/img/pizza-640.webp 640w, assets/img/pizza-1200.webp 1200w" sizes="(min-width: 900px) 34vw, 92vw" width="1200" height="1800" alt="Il pizzaiolo stende due pizze sul bancone infarinato" loading="lazy" decoding="async">
+            </div>
+          </figure>
+          <h3 class="h3">Pizza gourmet a lunga lievitazione</h3>
+          <p>Lievito madre, farine macinate a pietra e 72 ore di maturazione. Cottura nel forno a legna, condimenti aggiunti anche a crudo.</p>
+        </article>
+      </div>
+
+      <div class="wrap dishes-head">
+        <h3 class="h3">Dalla cucina</h3>
+      </div>
+      <div class="rail rail--bleed" data-rail>
+        <div class="rail__track dishes">
+          <figure class="dish">
+            <div class="pic pic--dish"><img src="assets/img/primi-640.webp" srcset="assets/img/primi-640.webp 640w, assets/img/primi-1200.webp 1200w" sizes="(min-width: 900px) 30vw, 78vw" width="1200" height="1600" alt="Spaghetti alle vongole veraci in un piatto bianco" loading="lazy" decoding="async"></div>
+            <figcaption><span>Spaghetti alle vongole veraci</span><small>Primi di mare</small></figcaption>
+          </figure>
+          <figure class="dish">
+            <div class="pic pic--dish"><img src="assets/img/secondi-800.webp" srcset="assets/img/secondi-800.webp 800w, assets/img/secondi-1600.webp 1600w" sizes="(min-width: 900px) 30vw, 78vw" width="1600" height="1067" alt="Pesce arrosto servito su un piatto turchese" loading="lazy" decoding="async"></div>
+            <figcaption><span>Pescato del giorno arrosto</span><small>Secondi</small></figcaption>
+          </figure>
+          <figure class="dish">
+            <div class="pic pic--dish"><img src="assets/img/dolci-640.webp" srcset="assets/img/dolci-640.webp 640w, assets/img/dolci-1200.webp 1200w" sizes="(min-width: 900px) 30vw, 78vw" width="1200" height="1800" alt="Dessert con crema e frutti rossi su piatto in ceramica bianca" loading="lazy" decoding="async"></div>
+            <figcaption><span>Semifreddo e frutti rossi</span><small>Dolci</small></figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="wrap terrace">
+        <div class="terrace__text">
+          <h3 class="h3">La terrazza sul mare</h3>
+          <p>Tavoli in legno chiaro, tovaglie di lino e il rumore della risacca. A pranzo si sta all'ombra delle vele, la sera si accendono le candele.</p>
+          <a class="link" href="#prenota">Prenota in terrazza <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+        <figure class="pic terrace__pic" data-curtain>
+          <div class="pic__inner" data-parallax>
+            <img src="assets/img/terrazza-640.webp" srcset="assets/img/terrazza-640.webp 640w, assets/img/terrazza-1200.webp 1200w" sizes="(min-width: 900px) 46vw, 92vw" width="1200" height="1600" alt="Tavolo apparecchiato sulla terrazza davanti al mare al tramonto" loading="lazy" decoding="async">
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 6. MENÙ -->
+    <section class="menu" id="menu" aria-labelledby="t-menu">
+      <div class="wrap">
+        <div class="section-head section-head--dark">
+          <h2 class="h2 lines" id="t-menu" data-lines><span class="ln"><span>Il menù</span></span></h2>
+          <div class="section-head__body"><p>Cambia con il mare e con le stagioni. Qui trovi una giornata d'estate tipo, dai crudi al bicchiere della staffa.</p></div>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Categorie del menù" data-tabs></div>
+        <div data-menu></div>
+        <div class="menu__foot">
+          <p><strong>Menù di esempio.</strong> Piatti e prezzi sono indicativi e cambiano secondo il pescato.</p>
+          <p>Per informazioni su allergeni e intolleranze chiedi al personale. Il pesce servito crudo è abbattuto a temperatura negativa secondo la normativa (Reg. CE 853/2004).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. PRENOTA UN TAVOLO -->
+    <section class="book" id="prenota" aria-labelledby="t-book">
+      <div class="wrap book__grid">
+        <div class="book__aside">
+          <h2 class="h2 lines" id="t-book" data-lines><span class="ln"><span>Prenota</span></span><span class="ln"><span>un tavolo</span></span></h2>
+          <p>Tre passaggi e ci sentiamo per la conferma. Per gruppi di più di 12 persone chiamaci.</p>
+          <dl class="hours" data-hours-resto></dl>
+          <a class="link" data-cfg-tel></a>
+        </div>
+
+        <form class="form steps" data-form="tavolo" novalidate>
+          <ol class="steps__nav" aria-label="Passaggi">
+            <li class="is-current" data-step-dot>Quando</li>
+            <li data-step-dot>Ospiti</li>
+            <li data-step-dot>Contatti</li>
+          </ol>
+
+          <fieldset class="step" data-step>
+            <legend class="sr-only">Passaggio 1 di 3: quando</legend>
+            <label class="field"><span>Data</span><input type="date" name="data" required data-table-date></label>
+            <div class="field">
+              <span id="lbl-fascia">Fascia</span>
+              <div class="seg" role="radiogroup" aria-labelledby="lbl-fascia">
+                <label><input type="radio" name="fascia" value="Pranzo" required><span>Pranzo</span></label>
+                <label><input type="radio" name="fascia" value="Cena" checked><span>Cena</span></label>
+              </div>
+            </div>
+            <div class="field">
+              <span id="lbl-ora">Orario</span>
+              <div class="chips" role="radiogroup" aria-labelledby="lbl-ora" data-slots></div>
+            </div>
+          </fieldset>
+
+          <fieldset class="step" data-step hidden>
+            <legend class="sr-only">Passaggio 2 di 3: ospiti</legend>
+            <div class="field">
+              <span id="lbl-persone">Persone</span>
+              <div class="stepper" aria-labelledby="lbl-persone">
+                <button type="button" data-step-minus aria-label="Una persona in meno">−</button>
+                <input type="number" name="persone" value="2" min="1" max="12" inputmode="numeric" required aria-labelledby="lbl-persone">
+                <button type="button" data-step-plus aria-label="Una persona in più">+</button>
+              </div>
+            </div>
+            <div class="field">
+              <span id="lbl-pref">Dove preferisci</span>
+              <div class="cards" role="radiogroup" aria-labelledby="lbl-pref">
+                <label><input type="radio" name="preferenza" value="Terrazza" checked><span><b>Terrazza</b><small>Vista mare, all'aperto</small></span></label>
+                <label><input type="radio" name="preferenza" value="Sala"><span><b>Sala</b><small>Al coperto, vetrate sul mare</small></span></label>
+                <label><input type="radio" name="preferenza" value="In riva al mare"><span><b>In riva</b><small>Tavolo sulla sabbia, su richiesta</small></span></label>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="step" data-step hidden>
+            <legend class="sr-only">Passaggio 3 di 3: contatti</legend>
+            <div class="grid2">
+              <label class="field"><span>Nome</span><input name="nome" required autocomplete="name"></label>
+              <label class="field"><span>Telefono</span><input name="telefono" type="tel" required autocomplete="tel" inputmode="tel"></label>
+            </div>
+            <label class="field"><span>Note <small>(allergie, seggiolone, ricorrenze)</small></span><textarea name="note" rows="3"></textarea></label>
+            <label class="check"><input type="checkbox" name="privacy" required data-consent><span>Ho letto l'<a href="privacy.html">informativa privacy</a></span></label>
+            <p class="summary" data-summary></p>
+          </fieldset>
+
+          <div class="form__actions steps__actions">
+            <button class="btn btn--line" type="button" data-prev hidden>Indietro</button>
+            <button class="btn btn--dark" type="button" data-next>Avanti</button>
+            <button class="btn btn--dark" type="submit" data-submit hidden>Invia la prenotazione</button>
+            <button class="btn btn--line btn--icon" type="button" data-wa-send hidden><svg aria-hidden="true"><use href="#i-wa"/></svg><span>Invia su WhatsApp</span></button>
+          </div>
+          <p class="form__msg" role="status" aria-live="polite" data-msg></p>
+          <p class="form__demo" data-demo hidden>Modulo dimostrativo: senza chiave Web3Forms la prenotazione non viene inviata. Usa "Invia su WhatsApp" per provarlo.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- 8. EVENTI -->
+    <section class="events" id="eventi" aria-labelledby="t-eventi">
+      <div class="wrap section-head section-head--dark">
+        <h2 class="h2 lines" id="t-eventi" data-lines><span class="ln"><span>Eventi</span></span><span class="ln"><span>in riva al mare</span></span></h2>
+        <div class="section-head__body"><p>Matrimoni, lauree, cene aziendali e serate in musica. Spiaggia, terrazza e cucina sono vostre, dall'aperitivo all'ultimo ballo.</p></div>
+      </div>
+
+      <figure class="wrap film" data-curtain>
+        <div class="film__frame">
+          <video class="vid" data-video="eventi" muted playsinline loop preload="none" aria-hidden="true"></video>
+        </div>
+        <figcaption>Una cena sulla sabbia vista dal drone. Video dimostrativo.</figcaption>
+      </figure>
+
+      <div class="rail rail--bleed events__rail" data-rail>
+        <div class="rail__track" data-event-cards></div>
+        <div class="wrap rail__nav">
+          <button class="round" type="button" data-rail-prev aria-label="Evento precedente"><svg aria-hidden="true" style="transform:scaleX(-1)"><use href="#i-arrow"/></svg></button>
+          <button class="round" type="button" data-rail-next aria-label="Evento successivo"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        </div>
+      </div>
+
+      <div class="wrap week">
+        <div class="week__head">
+          <h3 class="h3">Le serate della settimana</h3>
+          <p class="note">Programma di esempio. Il martedì siamo chiusi.</p>
+        </div>
+        <ol class="week__list" data-week></ol>
+      </div>
+
+      <div class="wrap mini">
+        <div class="pic"><img src="assets/img/ev-g1-640.webp" srcset="assets/img/ev-g1-640.webp 640w, assets/img/ev-g1-1200.webp 1200w" sizes="(min-width: 900px) 30vw, 70vw" width="1200" height="1800" alt="Ospiti a una festa all'aperto illuminata da lucine" loading="lazy" decoding="async"></div>
+        <div class="pic"><img src="assets/img/ev-g3-800.webp" srcset="assets/img/ev-g3-800.webp 800w, assets/img/ev-g3-1600.webp 1600w" sizes="(min-width: 900px) 36vw, 80vw" width="1600" height="1068" alt="Sposi e invitati al ricevimento serale sotto le luci" loading="lazy" decoding="async"></div>
+        <div class="pic"><img src="assets/img/ev-g2-640.webp" srcset="assets/img/ev-g2-640.webp 640w, assets/img/ev-g2-1200.webp 1200w" sizes="(min-width: 900px) 30vw, 70vw" width="1200" height="1800" alt="Tavoli apparecchiati sotto una ghirlanda di luci" loading="lazy" decoding="async"></div>
+      </div>
+
+      <div class="wrap quote-block" id="preventivo">
+        <div class="quote-block__aside">
+          <h3 class="h3">Richiedi un preventivo per il tuo evento</h3>
+          <p>Raccontaci data, ospiti e idea. Ti proponiamo menù, allestimento e sopralluogo entro due giorni.</p>
+        </div>
+        <form class="form form--dark" data-form="evento" novalidate>
+          <div class="grid2">
+            <label class="field"><span>Tipo di evento</span>
+              <select name="tipo" required data-event-types>
+                <option value="">Scegli…</option>
+              </select>
+            </label>
+            <label class="field"><span>Data indicativa</span><input type="date" name="data" required data-future-date></label>
+            <label class="field"><span>Ospiti</span><input type="number" name="ospiti" min="10" max="400" inputmode="numeric" required placeholder="es. 80"></label>
+            <label class="field"><span>Nome</span><input name="nome" required autocomplete="name"></label>
+            <label class="field"><span>Telefono</span><input name="telefono" type="tel" required autocomplete="tel" inputmode="tel"></label>
+            <label class="field"><span>Email <small>(facoltativa)</small></span><input name="email" type="email" autocomplete="email"></label>
+          </div>
+          <label class="field"><span>Il tuo evento in due righe</span><textarea name="messaggio" rows="3"></textarea></label>
+          <label class="check"><input type="checkbox" name="privacy" required data-consent><span>Ho letto l'<a href="privacy.html">informativa privacy</a></span></label>
+          <div class="form__actions">
+            <button class="btn btn--light" type="submit">Richiedi il preventivo</button>
+            <button class="btn btn--line-light btn--icon" type="button" data-wa-send><svg aria-hidden="true"><use href="#i-wa"/></svg><span>Invia su WhatsApp</span></button>
+          </div>
+          <p class="form__msg" role="status" aria-live="polite" data-msg></p>
+          <p class="form__demo" data-demo hidden>Modulo dimostrativo: senza chiave Web3Forms la richiesta non viene inviata. Usa "Invia su WhatsApp" per provarlo.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- 9. GALLERIA -->
+    <section class="gallery" id="galleria" aria-labelledby="t-gal">
+      <div class="wrap section-head">
+        <h2 class="h2 lines" id="t-gal" data-lines><span class="ln"><span>Galleria</span></span></h2>
+        <div class="section-head__body"><p>Una giornata a Riva Bianca, dal primo bagno all'ultimo calice.</p></div>
+      </div>
+      <div class="rail rail--bleed gallery__rail" data-rail>
+        <ul class="rail__track gallery__grid" data-gallery>
+          <li><a href="assets/img/gal-01-1200.webp" data-lb><img src="assets/img/gal-01-640.webp" width="1200" height="1800" alt="Ombrelloni chiusi in riva al mare al tramonto" loading="lazy" decoding="async"></a></li>
+          <li><a href="assets/img/gal-02-1600.webp" data-lb><img src="assets/img/gal-02-800.webp" width="1600" height="1064" alt="Piatto di gamberi crudi e ostriche" loading="lazy" decoding="async"></a></li>
+          <li><a href="assets/img/gal-03-1200.webp" data-lb><img src="assets/img/gal-03-640.webp" width="1200" height="1800" alt="Patio con ombrellone e piante affacciato sul mare" loading="lazy" decoding="async"></a></li>
+          <li><a href="assets/img/spiaggia-fila-1600.webp" data-lb><img src="assets/img/spiaggia-fila-800.webp" width="1600" height="898" alt="Una fila di lettini sulla sabbia bianca vista dall'alto" loading="lazy" decoding="async"></a></li>
+          <li><a href="assets/img/gal-05-1200.webp" data-lb><img src="assets/img/gal-05-640.webp" width="1200" height="1800" alt="Spritz su un tavolino in terrazza" loading="lazy" decoding="async"></a></li>
+          <li><a href="assets/img/gal-06-1200.webp" data-lb><img src="assets/img/gal-06-640.webp" width="1200" height="1600" alt="Dessert al cioccolato impiattato su piatto bianco" loading="lazy" decoding="async"></a></li>
+          <li><a href="assets/img/gal-04-1600.webp" data-lb><img src="assets/img/gal-04-800.webp" width="1600" height="900" alt="Un ombrellone turchese sulla sabbia vicino alla riva, dall'alto" loading="lazy" decoding="async"></a></li>
+          <li><a href="assets/img/gal-07-1200.webp" data-lb><img src="assets/img/gal-07-640.webp" width="1200" height="1800" alt="Sedie blu e lucine sul patio vista mare" loading="lazy" decoding="async"></a></li>
+          <li class="is-extra"><a href="assets/img/gal-08-1600.webp" data-lb><img src="assets/img/gal-08-800.webp" width="1600" height="1085" alt="Vassoio di ostriche con salsa al centro" loading="lazy" decoding="async"></a></li>
+          <li class="is-extra"><a href="assets/img/gal-09-1600.webp" data-lb><img src="assets/img/gal-09-800.webp" width="1600" height="1066" alt="Arco di fiori per un matrimonio sul pontile" loading="lazy" decoding="async"></a></li>
+          <li class="is-extra"><a href="assets/img/gal-10-1600.webp" data-lb><img src="assets/img/gal-10-800.webp" width="1600" height="900" alt="Calice di bollicine davanti al porto" loading="lazy" decoding="async"></a></li>
+          <li class="is-extra"><a href="assets/img/gal-12-1600.webp" data-lb><img src="assets/img/gal-12-800.webp" width="1600" height="1066" alt="Tavolo apparecchiato sul pontile all'imbrunire" loading="lazy" decoding="async"></a></li>
+        </ul>
+      </div>
+      <div class="wrap gallery__more">
+        <button class="btn btn--line" type="button" data-gallery-all>Vedi tutte le foto <span>(12)</span></button>
+      </div>
+    </section>
+
+    <!-- 10. RECENSIONI -->
+    <section class="reviews" id="recensioni" aria-labelledby="t-rev">
+      <div class="wrap">
+        <div class="reviews__head">
+          <h2 class="label" id="t-rev">Recensioni di esempio</h2>
+          <div class="reviews__nav">
+            <button class="round round--dark" type="button" data-rev-prev aria-label="Recensione precedente"><svg aria-hidden="true" style="transform:scaleX(-1)"><use href="#i-arrow"/></svg></button>
+            <span class="reviews__count" data-rev-count aria-live="polite"></span>
+            <button class="round round--dark" type="button" data-rev-next aria-label="Recensione successiva"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          </div>
+        </div>
+        <div class="reviews__viewport" data-reviews></div>
+      </div>
+    </section>
+
+    <!-- 11. DOMANDE FREQUENTI -->
+    <section class="faq" id="faq" aria-labelledby="t-faq">
+      <div class="wrap faq__grid">
+        <h2 class="h2 lines" id="t-faq" data-lines><span class="ln"><span>Domande</span></span><span class="ln"><span>frequenti</span></span></h2>
+        <div class="faq__list" data-faq></div>
+      </div>
+    </section>
+
+    <!-- 12. CONTATTI -->
+    <section class="contact" id="contatti" aria-labelledby="t-contatti">
+      <div class="finale">
+        <div class="finale__media">
+          <video class="vid" data-video="mare" muted playsinline loop preload="none" aria-hidden="true"></video>
+        </div>
+        <div class="finale__shade" aria-hidden="true"></div>
+        <div class="wrap finale__content">
+          <h2 class="display lines" id="t-contatti" data-lines><span class="ln"><span>Ci vediamo</span></span><span class="ln"><span>in riva.</span></span></h2>
+          <div class="hero__actions">
+            <a class="btn btn--light" href="#prenota">Prenota un tavolo</a>
+            <a class="btn btn--line-light" href="#ombrellone">Prenota l'ombrellone</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="wrap contact__grid">
+        <div class="contact__col">
+          <h3 class="label">Dove siamo</h3>
+          <address class="contact__addr"><span data-cfg="indirizzo"></span></address>
+          <a class="link" data-maps target="_blank" rel="noopener">Indicazioni stradali <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <ul class="contact__list">
+            <li><a data-cfg-tel></a></li>
+            <li><a data-wa target="_blank" rel="noopener">WhatsApp</a></li>
+            <li><a data-cfg-mail></a></li>
+          </ul>
+          <ul class="social" data-social></ul>
+        </div>
+        <div class="contact__col">
+          <h3 class="label">Orari</h3>
+          <dl class="hours" data-hours-all></dl>
+        </div>
+        <div class="map" data-map>
+          <p>La mappa di Google si carica solo se la chiedi, perché usa cookie di terze parti.</p>
+          <button class="btn btn--line-light" type="button" data-map-load>Mostra la mappa</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__grid">
+      <a class="footer__brand" href="#top" aria-label="Riva Bianca, torna all'inizio">
+        <svg aria-hidden="true"><use href="#rb-mono"/></svg>
+        <span>Riva Bianca</span>
+      </a>
+      <p class="footer__claim">Stabilimento balneare, ristorante di mare ed eventi sul lungomare di Pescara.</p>
+      <nav class="footer__nav" aria-label="Link utili">
+        <a href="#spiaggia">Spiaggia</a><a href="#menu">Menù</a><a href="#prenota">Prenota</a><a href="#eventi">Eventi</a><a href="privacy.html">Privacy</a>
+      </nav>
+      <div class="footer__legal">
+        <p>© <span data-year></span> Riva Bianca · P. IVA da inserire · <span data-cfg="indirizzo"></span></p>
+        <p>Bozza dimostrativa. Foto e video: Pexels.</p>
+        <p class="footer__credit">Sito realizzato da Davide Carestia</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Barra contatti su telefono: figlia diretta del body, non si muove mai -->
+  <nav class="dock" aria-label="Contatti rapidi">
+    <a data-cfg-tel-short><svg aria-hidden="true"><use href="#i-phone"/></svg><span>Chiama</span></a>
+    <a data-wa target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg><span>WhatsApp</span></a>
+    <a href="#prenota" class="dock__main"><span>Prenota</span></a>
+  </nav>
+
+  <dialog class="lb" data-lb-dialog aria-label="Galleria fotografica">
+    <p class="lb__cap" data-lb-cap></p>
+    <button class="lb__btn lb__close" type="button" data-lb-close aria-label="Chiudi"><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+    <button class="lb__btn lb__prev" type="button" data-lb-prev aria-label="Foto precedente"><svg aria-hidden="true" style="transform:scaleX(-1)"><use href="#i-arrow"/></svg></button>
+    <button class="lb__btn lb__next" type="button" data-lb-next aria-label="Foto successiva"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+  </dialog>
+
+  <script src="config.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/scene.js" defer></script>
+</body>
+</html>
